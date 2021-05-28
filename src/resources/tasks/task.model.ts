@@ -2,7 +2,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-interface ITask {
+export interface ITask {
   id: string;
   title: string;
   order: string;

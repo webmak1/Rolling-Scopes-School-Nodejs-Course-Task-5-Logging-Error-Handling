@@ -2,6 +2,7 @@
 
 import { DBTasks } from 'common/InMemoryDbTasks';
 import { remove } from 'lodash';
+import { IUser } from 'resources/users/user.model';
 
 /**
  * A User
@@ -15,7 +16,7 @@ import { remove } from 'lodash';
 /**
  * @type{User[]}
  */
-const UsersData = [];
+const UsersData: IUser[] = [];
 
 /**
  * ### Get All Users in DataBase file
@@ -62,11 +63,6 @@ const removeUser = async (userId) => {
  * @returns {Promise<User>} - Promise with Updated User in DataBase file
  */
 const updateUser = async (newUserData) => {
-  console.log('UPDATE USER');
-
-  console.log('newUserData');
-  console.log(newUserData);
-
   await removeUser(newUserData.id);
   await createUser(newUserData);
   return getUser(newUserData.id);

@@ -2,7 +2,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-interface IBoard {
+export interface IBoard {
   id: string;
   title: string;
   columns: object;
@@ -21,7 +21,6 @@ export class Board implements IBoard {
    * @param {Object} Board - Board
    */
   constructor({ title, columns }) {
-
     /**
      * @property {uuid()} id - id
      */

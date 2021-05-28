@@ -2,6 +2,7 @@
 
 import { DBTasks } from 'common/InMemoryDbTasks';
 import { remove } from 'lodash';
+import { ITask } from 'resources/tasks/task.model';
 
 /**
  * A Board
@@ -14,7 +15,7 @@ import { remove } from 'lodash';
 /**
  * @type{Board[]}
  */
-const BoardsData = [];
+const BoardsData: ITask[] = [];
 
 /**
  * ### Get All Boards in DataBase file

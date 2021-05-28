@@ -1,6 +1,7 @@
 // @ts-check
 
 import { map, remove } from 'lodash';
+import { IBoard } from 'resources/boards/board.model';
 
 /**
  * A Tasks
@@ -17,7 +18,7 @@ import { map, remove } from 'lodash';
 /**
  * @type{Task[]}
  */
-const TasksData = [];
+const TasksData: IBoard[] = [];
 
 /**
  * ### Get All Tasks in DataBase file

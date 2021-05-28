@@ -2,7 +2,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-interface IUser {
+export interface IUser {
   id: string;
   name: string;
   login: string;
