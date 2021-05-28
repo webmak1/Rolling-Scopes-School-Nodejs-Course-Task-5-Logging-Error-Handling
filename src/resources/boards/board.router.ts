@@ -84,8 +84,11 @@ router.route('/:id').put(async (req, res) => {
  */
 router.route('/:id').delete(async (req, res) => {
   try {
-    return res.json(await boardsService.remove(req));
+    const { id: boardId } = req.params;
+    return res.json(await boardsService.remove(boardId));
   } catch (err) {
+    console.log('DELETE BOARD');
+    console.log(err);
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
 });

@@ -29,15 +29,13 @@ const get = async (req) => {
  * @returns {Promise<Task>} - Promise with Created Task in Service
  */
 const create = async (boardId, title, order, description, userId, columnId) => {
-  console.log(boardId, title, order, description, userId, columnId);
-
   const task = await tasksRepo.create(
     new Task({
+      boardId,
       title,
       order,
       description,
       userId,
-      boardId,
       columnId,
     })
   );

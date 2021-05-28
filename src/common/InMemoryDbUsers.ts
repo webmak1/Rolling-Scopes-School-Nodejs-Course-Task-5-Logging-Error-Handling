@@ -1,7 +1,7 @@
 // @ts-check
 
 import { DBTasks } from 'common/InMemoryDbTasks';
-import _ from 'lodash';
+import { remove } from 'lodash';
 
 /**
  * A User
@@ -50,7 +50,7 @@ const createUser = async (user) => {
  */
 const removeUser = async (userId) => {
   const deletedUser = await getUser(userId);
-  await _.remove(UsersData, (user) => user.id === userId);
+  await remove(UsersData, (user) => user.id === userId);
   await DBTasks.deleteUserFromTasks(userId);
   return deletedUser;
 };

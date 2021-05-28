@@ -58,8 +58,6 @@ const update = (boardId, taskId, newTask) =>
  */
 const remove = (id) => DBTasks.removeTask(id);
 
-module.exports = { getAll, get, create, update, remove };
-
 export const tasksRepo = {
   getAll,
   get,

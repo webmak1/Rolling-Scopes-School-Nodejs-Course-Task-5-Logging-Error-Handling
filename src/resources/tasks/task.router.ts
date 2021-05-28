@@ -2,9 +2,9 @@
 
 import * as express from 'express';
 import { StatusCodes } from 'http-status-codes';
-const tasksService = require('resources/tasks/task.service');
+import { tasksService } from 'resources/tasks/task.service';
 
-const router = express({ mergeParams: true });
+const router = express.Router({ mergeParams: true });
 
 /**
  * ### Get All Task
@@ -51,7 +51,8 @@ router.route('/').post(async (req, res) => {
     const { boardId } = req.params;
     const { title, order, description, userId, columnId } = req.body;
 
-    console.log(boardId);
+    // console.log(boardId);
+    // console.log({ title, order, description, userId, columnId });
 
     return res
       .status(StatusCodes.CREATED)
@@ -66,6 +67,8 @@ router.route('/').post(async (req, res) => {
         )
       );
   } catch (err) {
+    console.log('ERR');
+    console.log(err);
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
 });

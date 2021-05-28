@@ -53,8 +53,7 @@ const update = async (req) => {
  * @param {express.Request} req
  * @returns {Promise<Board>} - Promise with Deleted Board in Service
  */
-const remove = async (req) => {
-  const { id: boardId } = req.params;
+const remove = async (boardId) => {
   const board = await boardsRepo.remove(boardId);
   return Board.toResponse(board);
 };
