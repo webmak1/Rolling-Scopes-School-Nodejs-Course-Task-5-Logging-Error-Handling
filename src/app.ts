@@ -26,10 +26,17 @@ app.use('/boards', boardRouter);
 boardRouter.use('/:boardId/tasks', taskRouter);
 app.use('/tasks', taskRouter);
 
-app.use((err, _req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-  next();
-});
+app.use(
+  (
+    err: Error,
+    _req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+    next();
+  }
+);
 
 export { app };

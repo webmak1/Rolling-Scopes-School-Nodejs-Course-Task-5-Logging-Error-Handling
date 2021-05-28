@@ -43,6 +43,7 @@ const create = (title: string, columns: string) => {
   });
 
   DBBoards.createBoard(newBoard);
+  return get(newBoard.id);
 };
 
 /**
@@ -58,6 +59,7 @@ const update = (boardId: string, title: string, columns: string) => {
     columns,
   });
   DBBoards.updateBoard(newBoardData);
+  return get(newBoardData.id);
 };
 
 /**
