@@ -1,11 +1,23 @@
 // @ts-check
 
-const { v4: uuid } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
+
+interface IUser {
+  id: string;
+  name: string;
+  login: string;
+  password: string;
+}
 
 /**
  *  ### Class to create a User object
  */
-class User {
+export class User implements IUser {
+  public id: string;
+  public name: string;
+  public login: string;
+  public password: string;
+
   /**
    *
    * @param {Object} User - User
@@ -14,7 +26,7 @@ class User {
     /**
      * @property {uuid()} id - id
      */
-    this.id = uuid();
+    this.id = uuidv4();
 
     /**
      * @property {string} name - name
@@ -42,5 +54,3 @@ class User {
     return { id, name, login };
   }
 }
-
-module.exports = User;

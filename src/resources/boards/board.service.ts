@@ -1,8 +1,7 @@
 // @ts-check
 
-const express = require('express');
-const boardsRepo = require('./board.memory.repository');
-const Board = require('./board.model');
+import { boardsRepo } from 'resources/boards/board.memory.repository';
+import { Board } from 'resources/boards/board.model';
 
 /**
  * ### Get All Boards in Service
@@ -60,12 +59,7 @@ const remove = async (req) => {
   return Board.toResponse(board);
 };
 
-// Dummy for linter
-if (process.env.level) {
-  console.log('**Express Version: ', express.version);
-}
-
-module.exports = {
+export const boardsService = {
   getAll,
   get,
   create,

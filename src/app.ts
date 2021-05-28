@@ -1,10 +1,10 @@
-const express = require('express');
-const swaggerUI = require('swagger-ui-express');
-const path = require('path');
-const YAML = require('yamljs');
-const userRouter = require('./resources/users/user.router');
-const boardRouter = require('./resources/boards/board.router');
-const taskRouter = require('./resources/tasks/task.router');
+import * as express from 'express';
+import * as path from 'path';
+import { router as boardRouter } from 'resources/boards/board.router';
+import { router as taskRouter } from 'resources/tasks/task.router';
+import { router as userRouter } from 'resources/users/user.router';
+import * as swaggerUI from 'swagger-ui-express';
+import * as YAML from 'yamljs';
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -26,10 +26,10 @@ app.use('/boards', boardRouter);
 boardRouter.use('/:boardId/tasks', taskRouter);
 app.use('/tasks', taskRouter);
 
-app.use((err, req, res, next) => {
+app.use((err, _req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
   next();
 });
 
-module.exports = app;
+export { app };

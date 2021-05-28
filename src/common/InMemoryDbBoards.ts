@@ -1,7 +1,7 @@
 // @ts-check
 
-const _ = require('lodash');
-const DBTasks = require('./InMemoryDbTasks');
+import { DBTasks } from 'common/InMemoryDbTasks';
+import _ from 'lodash';
 
 /**
  * A Board
@@ -14,13 +14,13 @@ const DBTasks = require('./InMemoryDbTasks');
 /**
  * @type{Board[]}
  */
-const DBBoards = [];
+const BoardsData = [];
 
 /**
  * ### Get All Boards in DataBase file
  * @returns {Promise<Board[]>} - Promise with All Boards in DataBase file
  */
-const getAllBoards = async () => DBBoards.slice(0);
+const getAllBoards = async () => BoardsData.slice(0);
 
 /**
  * ### Get Board By Id in DataBase file
@@ -29,7 +29,7 @@ const getAllBoards = async () => DBBoards.slice(0);
  */
 const getBoard = async (id) => {
   const allBoards = await getAllBoards();
-  return allBoards.filter((el) => el.id === id)[0];
+  return allBoards.filter((el) => el?.id === id)[0];
 };
 
 /**
@@ -38,7 +38,7 @@ const getBoard = async (id) => {
  * @returns {Promise<Board>} - Promise with Created Board in DataBase file
  */
 const createBoard = async (board) => {
-  DBBoards.push(board);
+  BoardsData.push(board);
   return getBoard(board.id);
 };
 
@@ -49,7 +49,7 @@ const createBoard = async (board) => {
  */
 const removeBoard = async (boardId) => {
   const deletedBoard = await getBoard(boardId);
-  await _.remove(DBBoards, (board) => board.id === boardId);
+  await _.remove(BoardsData, (board) => board.id === boardId);
   await DBTasks.removeTaskByBoardId(boardId);
   return deletedBoard;
 };
@@ -66,7 +66,7 @@ const updateBoard = async (id, newBoard) => {
   return getBoard(id);
 };
 
-module.exports = {
+export const DBBoards = {
   getAllBoards,
   getBoard,
   createBoard,

@@ -1,10 +1,11 @@
 // @ts-check
 
-const express = require('express');
-const { StatusCodes } = require('http-status-codes');
-const router = require('express').Router();
-const boardsService = require('./board.service');
-const Board = require('./board.model');
+// import { Board } from 'boards/board.model.ts';
+import * as express from 'express';
+import { StatusCodes } from 'http-status-codes';
+import { boardsService } from 'resources/boards/board.service';
+
+const router = express();
 
 /**
  * ### Get All Boards
@@ -88,10 +89,4 @@ router.route('/:id').delete(async (req, res) => {
   }
 });
 
-// Dummy for linter
-if (process.env.level) {
-  console.log('**Express Version: ', express.version);
-  console.log(Board);
-}
-
-module.exports = router;
+export { router };

@@ -1,8 +1,7 @@
 // @ts-check
 
-const express = require('express');
-const usersRepo = require('./user.memory.repository');
-const User = require('./user.model');
+import { usersRepo } from 'resources/users/user.memory.repository';
+import { User } from 'resources/users/user.model';
 
 /**
  * A Public User Data
@@ -68,9 +67,10 @@ const remove = async (id) => {
   return User.toResponse(user);
 };
 
-// Dummy for linter
-if (process.env.level) {
-  console.log('**Express Version: ', express.version);
-}
-
-module.exports = { getAll, get, create, remove, update };
+export const usersService = {
+  getAll,
+  get,
+  create,
+  update,
+  remove,
+};

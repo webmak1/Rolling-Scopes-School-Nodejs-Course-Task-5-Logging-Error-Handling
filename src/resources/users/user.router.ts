@@ -1,9 +1,9 @@
 // @ts-check
+import * as express from 'express';
+import { StatusCodes } from 'http-status-codes';
+import { usersService } from 'resources/users/user.service';
 
-const express = require('express');
-const { StatusCodes } = require('http-status-codes');
-const router = require('express').Router();
-const usersService = require('./user.service');
+const router = express();
 
 /**
  * A Public User Data
@@ -93,9 +93,4 @@ router.route('/:id').delete(async (req, res) => {
   }
 });
 
-// Dummy for linter
-if (process.env.level) {
-  console.log('**Express Version: ', express.version);
-}
-
-module.exports = router;
+export { router };

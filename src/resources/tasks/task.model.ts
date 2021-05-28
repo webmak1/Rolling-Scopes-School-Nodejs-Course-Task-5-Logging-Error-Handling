@@ -1,11 +1,28 @@
 // @ts-check
 
-const { v4: uuid } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
+
+interface ITask {
+  id: string;
+  title: string;
+  order: string;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+}
 
 /**
  *  ### Class to create a Task object
  */
-class Task {
+export class Task implements ITask {
+  public id: string;
+  public title: string;
+  public order: string;
+  public description: string;
+  public userId: string;
+  public boardId: string;
+  public columnId: string;
   /**
    *
    * @param {Object} Task - Task
@@ -14,7 +31,7 @@ class Task {
     /**
      * @property {uuid()} id - id
      */
-    this.id = uuid();
+    this.id = uuidv4();
     /**
      * @property {string} title - title
      */

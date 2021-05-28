@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    // "strict": true,
+    "target": "esnext",
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "outDir": "./build",
+    "composite": true,
+    "module": "commonjs",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "stripInternal": true,
+    "types": [],
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
+}

@@ -1,6 +1,6 @@
 // @ts-check
 
-const DBBoards = require('../../common/InMemoryDbBoards');
+import { DBBoards } from 'common/InMemoryDbBoards';
 
 /**
  * A Board
@@ -51,7 +51,7 @@ const update = (id, newBoard) => DBBoards.updateBoard(id, newBoard);
  */
 const remove = (boardId) => DBBoards.removeBoard(boardId);
 
-module.exports = {
+export const boardsRepo = {
   getAll,
   get,
   create,

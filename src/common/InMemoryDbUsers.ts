@@ -1,7 +1,7 @@
 // @ts-check
 
-const _ = require('lodash');
-const DBTasks = require('./InMemoryDbTasks');
+import { DBTasks } from 'common/InMemoryDbTasks';
+import _ from 'lodash';
 
 /**
  * A User
@@ -15,13 +15,13 @@ const DBTasks = require('./InMemoryDbTasks');
 /**
  * @type{User[]}
  */
-const DBUsers = [];
+const UsersData = [];
 
 /**
  * ### Get All Users in DataBase file
  * @returns {Promise<User[]>} - Promise with All Users in DataBase file
  */
-const getAllUsers = async () => DBUsers.slice(0);
+const getAllUsers = async () => UsersData.slice(0);
 
 /**
  * ### Get User by Id in DataBase file
@@ -30,7 +30,7 @@ const getAllUsers = async () => DBUsers.slice(0);
  */
 const getUser = async (id) => {
   const allUsers = await getAllUsers();
-  return allUsers.filter((el) => el.id === id)[0];
+  return allUsers.filter((el) => el?.id === id)[0];
 };
 
 /**
@@ -39,7 +39,7 @@ const getUser = async (id) => {
  * @returns {Promise<User>} - Promise with Created User in DataBase file
  */
 const createUser = async (user) => {
-  DBUsers.push(user);
+  UsersData.push(user);
   return getUser(user.id);
 };
 
@@ -50,7 +50,7 @@ const createUser = async (user) => {
  */
 const removeUser = async (userId) => {
   const deletedUser = await getUser(userId);
-  await _.remove(DBUsers, (user) => user.id === userId);
+  await _.remove(UsersData, (user) => user.id === userId);
   await DBTasks.deleteUserFromTasks(userId);
   return deletedUser;
 };
@@ -67,4 +67,10 @@ const updateUser = async (id, newUser) => {
   return getUser(id);
 };
 
-module.exports = { getAllUsers, getUser, createUser, updateUser, removeUser };
+export const DBUsers = {
+  getAllUsers,
+  getUser,
+  createUser,
+  updateUser,
+  removeUser,
+};

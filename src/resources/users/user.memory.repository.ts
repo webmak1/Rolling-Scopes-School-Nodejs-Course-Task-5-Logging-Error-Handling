@@ -1,6 +1,6 @@
 // @ts-check
 
-const DBUsers = require('../../common/InMemoryDbUsers');
+import { DBUsers } from 'common/InMemoryDbUsers';
 
 /**
  * A User
@@ -52,4 +52,10 @@ const update = (id, newUser) => DBUsers.updateUser(id, newUser);
  */
 const remove = (id) => DBUsers.removeUser(id);
 
-module.exports = { getAll, get, create, update, remove };
+export const usersRepo = {
+  getAll,
+  get,
+  create,
+  update,
+  remove,
+};

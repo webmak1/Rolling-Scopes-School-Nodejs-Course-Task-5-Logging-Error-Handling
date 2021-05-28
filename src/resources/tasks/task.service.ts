@@ -1,8 +1,7 @@
 // @ts-check
 
-const express = require('express');
-const tasksRepo = require('./task.memory.repository');
-const Task = require('./task.model');
+import { tasksRepo } from 'resources/tasks/task.memory.repository';
+import { Task } from 'resources/tasks/task.model';
 
 /**
  * ### Get All Tasks in Service
@@ -69,9 +68,10 @@ const remove = async (req) => {
   return Task.toResponse(task);
 };
 
-// Dummy for linter
-if (process.env.level) {
-  console.log('**Express Version: ', express.version);
-}
-
-module.exports = { getAll, get, create, update, remove };
+export const tasksService = {
+  getAll,
+  get,
+  create,
+  update,
+  remove,
+};

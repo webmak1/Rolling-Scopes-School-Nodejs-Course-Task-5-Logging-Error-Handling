@@ -1,10 +1,10 @@
 // @ts-check
 
-const express = require('express');
-const { StatusCodes } = require('http-status-codes');
-const router = require('express').Router({ mergeParams: true });
-const tasksService = require('./task.service');
-const Task = require('./task.model');
+import * as express from 'express';
+import { StatusCodes } from 'http-status-codes';
+const tasksService = require('resources/tasks/task.service');
+
+const router = express({ mergeParams: true });
 
 /**
  * ### Get All Task
@@ -86,10 +86,4 @@ router.route('/:id').delete(async (req, res) => {
   }
 });
 
-// Dummy for linter
-if (process.env.level) {
-  console.log('**Express Version: ', express.version);
-  console.log(Task);
-}
-
-module.exports = router;
+export { router };

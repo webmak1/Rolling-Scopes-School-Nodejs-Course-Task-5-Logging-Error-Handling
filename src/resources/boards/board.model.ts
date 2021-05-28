@@ -1,20 +1,30 @@
 // @ts-check
 
-const { v4: uuid } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
+
+interface IBoard {
+  id: string;
+  title: string;
+  columns: string;
+}
 
 /**
  *  ### Class to create a Board object
  */
-class Board {
+export class Board implements IBoard {
+  public id: string;
+  public title: string;
+  public columns: string;
+
   /**
    *
    * @param {Object} Board - Board
    */
-  constructor({ title, columns } = {}) {
+  constructor({ title, columns }) {
     /**
      * @property {uuid()} id - id
      */
-    this.id = uuid();
+    this.id = uuidv4();
     /**
      * @property {string} title - title
      */
