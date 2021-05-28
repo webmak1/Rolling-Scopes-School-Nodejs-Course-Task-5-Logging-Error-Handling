@@ -52,14 +52,13 @@ const create = async (login, password, name) => {
  * @returns {Promise<PublicUserData>}  - Promise with Updated User in Service
  */
 const update = async (userId, login, password, name) => {
-  const user = new User({
+  const newUserData = new User({
+    id: userId,
     login,
     password,
     name,
   });
-  const dataForUpdateUser = await usersRepo.create(user);
-
-  const updatedUser = await usersRepo.update(userId, dataForUpdateUser);
+  const updatedUser = await usersRepo.update(newUserData);
   return User.toResponse(updatedUser);
 };
 

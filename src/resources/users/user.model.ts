@@ -22,11 +22,11 @@ export class User implements IUser {
    *
    * @param {Object} User - User
    */
-  constructor({ name, login, password }) {
+  constructor({ id = uuidv4(), name, login, password }) {
     /**
      * @property {uuid()} id - id
      */
-    this.id = uuidv4();
+    this.id = id;
 
     /**
      * @property {string} name - name

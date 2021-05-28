@@ -87,9 +87,9 @@ const deleteUserFromTasks = async (userId) => {
  * @param {Task} newTask - new Task
  * @returns {Promise<Task>} - Promise with Updated Task in DataBase file
  */
-const updateTask = async (_boardId, taskId, _newTask) => {
-  // await removeTask(taskId);
-  // await createTask(newTask);
+const updateTask = async (_boardId, taskId, newTask) => {
+  await removeTask(taskId);
+  await createTask(newTask);
   return getTask(null, taskId);
 };
 

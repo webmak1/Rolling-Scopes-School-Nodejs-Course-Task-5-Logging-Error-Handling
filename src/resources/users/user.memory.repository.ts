@@ -43,8 +43,7 @@ const create = (user) => DBUsers.createUser(user);
  * @param {object} newUser - new User
  * @returns {Promise<User>} - Promise with Updated User in Repository
  */
-const update = (userId, dataForUpdateUser) =>
-  DBUsers.updateUser(userId, dataForUpdateUser);
+const update = (newUserData) => DBUsers.updateUser(newUserData);
 
 /**
  * ### Remove User in Repository

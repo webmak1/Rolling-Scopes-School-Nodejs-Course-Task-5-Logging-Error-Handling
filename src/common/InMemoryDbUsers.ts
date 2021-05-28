@@ -61,11 +61,15 @@ const removeUser = async (userId) => {
  * @param {object} newUser - new User
  * @returns {Promise<User>} - Promise with Updated User in DataBase file
  */
-// TODO: ЛОГИЧЕСКАЯ ОШИБКА ПОСЛЕ РЕФАКТОРИНГА!
-const updateUser = async (userId, dataForUpdateUser) => {
-  await removeUser(userId);
-  await createUser(dataForUpdateUser);
-  return getUser(userId);
+const updateUser = async (newUserData) => {
+  console.log('UPDATE USER');
+
+  console.log('newUserData');
+  console.log(newUserData);
+
+  await removeUser(newUserData.id);
+  await createUser(newUserData);
+  return getUser(newUserData.id);
 };
 
 export const DBUsers = {
