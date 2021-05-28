@@ -22,10 +22,10 @@ const getAll = async () => DBUsers.getAllUsers();
  * @param {string} id - user id
  * @returns {Promise<User>} - Promise with User by Id in Repository
  */
-const get = async (id) => {
-  const user = await DBUsers.getUser(id);
+const get = async (userId) => {
+  const user = await DBUsers.getUser(userId);
   if (!user) {
-    throw new Error(`[App Error] The user with id: ${id} was not found!`);
+    throw new Error(`[App Error] The user with id: ${userId} was not found!`);
   }
   return user;
 };
@@ -43,14 +43,15 @@ const create = (user) => DBUsers.createUser(user);
  * @param {object} newUser - new User
  * @returns {Promise<User>} - Promise with Updated User in Repository
  */
-const update = (id, newUser) => DBUsers.updateUser(id, newUser);
+const update = (userId, dataForUpdateUser) =>
+  DBUsers.updateUser(userId, dataForUpdateUser);
 
 /**
  * ### Remove User in Repository
  * @param {string} id - User Id
  * @returns {Promise<User>} - Promise with Deleted User in Repository
  */
-const remove = (id) => DBUsers.removeUser(id);
+const remove = (userId) => DBUsers.removeUser(userId);
 
 export const usersRepo = {
   getAll,

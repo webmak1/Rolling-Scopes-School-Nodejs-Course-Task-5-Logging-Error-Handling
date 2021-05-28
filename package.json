@@ -10,8 +10,9 @@
   "scripts": {
     "build": "NODE_PATH=./src tsc",
     "start": "NODE_PATH=./src ts-node src/server.ts",
+    "dev": "NODE_PATH=./src nodemon",
     "lint": "eslint --ext .js,.ts --fix src/",
-    "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
+    "test": "NODE_PATH=./src cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand --watch",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
   },
   "keywords": [

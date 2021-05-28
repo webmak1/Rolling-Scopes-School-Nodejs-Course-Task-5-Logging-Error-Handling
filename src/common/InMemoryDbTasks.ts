@@ -51,6 +51,8 @@ const getTask = async (boardId, taskId) => {
  * @returns {Promise<Task>} - Promise with Created Task in DataBase file
  */
 const createTask = async (task) => {
+  console.log(task);
+
   TasksData.push(task);
   return getTask(null, task.id);
 };

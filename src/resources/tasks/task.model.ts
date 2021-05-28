@@ -76,4 +76,3 @@ export class Task implements ITask {
     };
   }
 }
-module.exports = Task;

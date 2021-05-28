@@ -39,7 +39,8 @@ router.route('/').get(async (_req, res) => {
  */
 router.route('/:id').get(async (req, res) => {
   try {
-    return res.json(await usersService.get(req));
+    const { id: userId } = req.params;
+    return res.json(await usersService.get(userId));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -55,7 +56,10 @@ router.route('/:id').get(async (req, res) => {
  */
 router.route('/').post(async (req, res) => {
   try {
-    return res.status(StatusCodes.CREATED).json(await usersService.create(req));
+    const { login, password, name } = req.body;
+    return res
+      .status(StatusCodes.CREATED)
+      .json(await usersService.create(login, password, name));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -71,7 +75,9 @@ router.route('/').post(async (req, res) => {
  */
 router.route('/:id').put(async (req, res) => {
   try {
-    return res.json(await usersService.update(req.params.id, req.body));
+    const { id: userId } = req.params;
+    const { login, password, name } = req.body;
+    return res.json(await usersService.update(userId, login, password, name));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -87,7 +93,8 @@ router.route('/:id').put(async (req, res) => {
  */
 router.route('/:id').delete(async (req, res) => {
   try {
-    return res.json(await usersService.remove(req.params.id));
+    const { id: userId } = req.params;
+    return res.json(await usersService.remove(userId));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }

@@ -28,9 +28,8 @@ const get = async (req) => {
  * @param {express.Request} req
  * @returns {Promise<Task>} - Promise with Created Task in Service
  */
-const create = async (req) => {
-  const { title, order, description, userId, columnId } = req.body;
-  const { boardId } = req.params;
+const create = async (boardId, title, order, description, userId, columnId) => {
+  console.log(boardId, title, order, description, userId, columnId);
 
   const task = await tasksRepo.create(
     new Task({

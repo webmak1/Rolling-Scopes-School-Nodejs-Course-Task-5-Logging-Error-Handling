@@ -48,7 +48,23 @@ router.route('/:id').get(async (req, res) => {
  */
 router.route('/').post(async (req, res) => {
   try {
-    return res.status(StatusCodes.CREATED).json(await tasksService.create(req));
+    const { boardId } = req.params;
+    const { title, order, description, userId, columnId } = req.body;
+
+    console.log(boardId);
+
+    return res
+      .status(StatusCodes.CREATED)
+      .json(
+        await tasksService.create(
+          boardId,
+          title,
+          order,
+          description,
+          userId,
+          columnId
+        )
+      );
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }

@@ -28,9 +28,9 @@ const getAllUsers = async () => UsersData.slice(0);
  * @param {string} id - user id
  * @returns {Promise<User>} - Promise with a Single User in DataBase file
  */
-const getUser = async (id) => {
+const getUser = async (userId) => {
   const allUsers = await getAllUsers();
-  return allUsers.filter((el) => el?.id === id)[0];
+  return allUsers.filter((el) => el?.id === userId)[0];
 };
 
 /**
@@ -61,10 +61,11 @@ const removeUser = async (userId) => {
  * @param {object} newUser - new User
  * @returns {Promise<User>} - Promise with Updated User in DataBase file
  */
-const updateUser = async (id, newUser) => {
-  await removeUser(id);
-  await createUser(newUser);
-  return getUser(id);
+// TODO: ЛОГИЧЕСКАЯ ОШИБКА ПОСЛЕ РЕФАКТОРИНГА!
+const updateUser = async (userId, dataForUpdateUser) => {
+  await removeUser(userId);
+  await createUser(dataForUpdateUser);
+  return getUser(userId);
 };
 
 export const DBUsers = {

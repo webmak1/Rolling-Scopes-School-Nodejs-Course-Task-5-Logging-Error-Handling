@@ -28,11 +28,11 @@ const get = async (req) => {
  * @param {express.Request} req
  * @returns {Promise<Board>} - Promise with Created Board in Service
  */
-const create = async (req) => {
+const create = async (title, columns) => {
   const board = await boardsRepo.create(
     new Board({
-      title: req.body.title,
-      columns: req.body.columns,
+      title,
+      columns,
     })
   );
   return Board.toResponse(board);
