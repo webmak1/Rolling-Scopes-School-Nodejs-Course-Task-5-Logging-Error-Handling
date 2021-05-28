@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    // "strict": true,
+    "strict": true,
     "target": "esnext",
     "baseUrl": "./src",
     "rootDir": "./src",
@@ -9,7 +9,7 @@
     "module": "commonjs",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitReturns": true,
     "stripInternal": true,
     "types": [],
