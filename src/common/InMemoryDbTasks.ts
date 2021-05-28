@@ -1,7 +1,7 @@
 // @ts-check
 
 import { map, remove } from 'lodash';
-import { IBoard } from 'resources/boards/board.model';
+import { ITask } from 'resources/tasks/task.model';
 
 /**
  * A Tasks
@@ -18,7 +18,7 @@ import { IBoard } from 'resources/boards/board.model';
 /**
  * @type{Task[]}
  */
-const TasksData: IBoard[] = [];
+const TasksData: ITask[] = [];
 
 /**
  * ### Get All Tasks in DataBase file
@@ -32,7 +32,7 @@ const getAllTasks = async () => TasksData.slice(0);
  * @param {string} taskId - task id
  * @returns {Promise<Task>} - Promise with a Single Task in DataBase file
  */
-const getTask = async (boardId, taskId) => {
+const getTask = async (boardId: string, taskId: string) => {
   const allTasks = await getAllTasks();
   const result = await allTasks.filter(
     (el) => el?.boardId === boardId && el?.id === taskId
@@ -40,7 +40,7 @@ const getTask = async (boardId, taskId) => {
   return result;
 };
 
-const getTaskById = async (taskId) => {
+const getTaskById = async (taskId: string) => {
   const allTasks = await getAllTasks();
   const result = await allTasks.filter((el) => el.id === taskId)[0];
   return result;
@@ -51,7 +51,7 @@ const getTaskById = async (taskId) => {
  * @param {Task} task - Task body
  * @returns {Promise<Task>} - Promise with Created Task in DataBase file
  */
-const createTask = async (task) => {
+const createTask = async (task: ITask) => {
   await TasksData.push(task);
   return await getTaskById(task.id);
 };
@@ -61,8 +61,8 @@ const createTask = async (task) => {
  * @param {string} id - Task Id
  * @returns {Promise<Task>} - Promise with Deleted Task in DataBase file
  */
-const removeTask = async (id) => {
-  const deletedTask = await getTask(null, id);
+const removeTask = async (id: string) => {
+  const deletedTask = await getTaskById(id);
   await remove(TasksData, (task) => task.id === id);
   return deletedTask;
 };
@@ -72,7 +72,7 @@ const removeTask = async (id) => {
  * @param {string} userId
  * @returns {Promise<void>} - Promise with Void in DataBase file
  */
-const deleteUserFromTasks = async (userId) => {
+const deleteUserFromTasks = async (userId: string) => {
   await map(TasksData, async (task) => {
     if (task.userId === userId) {
       await removeTask(task.id);
@@ -88,10 +88,10 @@ const deleteUserFromTasks = async (userId) => {
  * @param {Task} newTask - new Task
  * @returns {Promise<Task>} - Promise with Updated Task in DataBase file
  */
-const updateTask = async (_boardId, taskId, newTask) => {
+const updateTask = async (_boardId: string, taskId: string, newTask: ITask) => {
   await removeTask(taskId);
   await createTask(newTask);
-  return getTask(null, taskId);
+  return getTaskById(taskId);
 };
 
 /**
@@ -99,7 +99,7 @@ const updateTask = async (_boardId, taskId, newTask) => {
  * @param {string} boardId
  * @returns {Promise<void>} - Promise with Void in DataBase file
  */
-const removeTaskByBoardId = async (boardId) => {
+const removeTaskByBoardId = async (boardId: string) => {
   await remove(TasksData, (task) => task.boardId === boardId);
 };
 

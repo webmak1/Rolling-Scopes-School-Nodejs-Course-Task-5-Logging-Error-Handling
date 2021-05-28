@@ -2,7 +2,7 @@
 
 import { DBTasks } from 'common/InMemoryDbTasks';
 import { remove } from 'lodash';
-import { ITask } from 'resources/tasks/task.model';
+import { IBoard } from 'resources/boards/board.model';
 
 /**
  * A Board
@@ -15,7 +15,7 @@ import { ITask } from 'resources/tasks/task.model';
 /**
  * @type{Board[]}
  */
-const BoardsData: ITask[] = [];
+const BoardsData: IBoard[] = [];
 
 /**
  * ### Get All Boards in DataBase file
@@ -28,7 +28,7 @@ const getAllBoards = async () => BoardsData.slice(0);
  * @param {string} id - board id
  * @returns {Promise<Board>} - Promise with a Single Board in DataBase file
  */
-const getBoard = async (id) => {
+const getBoard = async (id: string) => {
   const allBoards = await getAllBoards();
   return allBoards.filter((el) => el?.id === id)[0];
 };
@@ -38,9 +38,9 @@ const getBoard = async (id) => {
  * @param {Board} board - Board body
  * @returns {Promise<Board>} - Promise with Created Board in DataBase file
  */
-const createBoard = async (board) => {
-  BoardsData.push(board);
-  return getBoard(board.id);
+const createBoard = async (newBoard: IBoard) => {
+  BoardsData.push(newBoard);
+  return getBoard(newBoard.id);
 };
 
 /**
@@ -48,7 +48,7 @@ const createBoard = async (board) => {
  * @param {string} boardId - Board Id
  * @returns {Promise<Board>} - Promise with Deleted Board in DataBase file
  */
-const removeBoard = async (boardId) => {
+const removeBoard = async (boardId: string) => {
   const deletedBoard = await getBoard(boardId);
   await remove(BoardsData, (board) => board.id === boardId);
   await DBTasks.removeTaskByBoardId(boardId);
@@ -61,10 +61,10 @@ const removeBoard = async (boardId) => {
  * @param {Board} newBoard - New Board
  * @returns {Promise<Board>} - Promise with Updated Board in DataBase file
  */
-const updateBoard = async (id, newBoard) => {
-  await removeBoard(id);
-  await createBoard(newBoard);
-  return getBoard(id);
+const updateBoard = async (newBoardData: IBoard) => {
+  await removeBoard(newBoardData.id);
+  await createBoard(newBoardData);
+  return getBoard(newBoardData.id);
 };
 
 export const DBBoards = {

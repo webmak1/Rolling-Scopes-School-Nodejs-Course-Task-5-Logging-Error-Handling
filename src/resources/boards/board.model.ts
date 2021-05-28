@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 export interface IBoard {
   id: string;
   title: string;
-  columns: object;
+  columns: string;
 }
 
 /**
@@ -14,17 +14,17 @@ export interface IBoard {
 export class Board implements IBoard {
   public id: string;
   public title: string;
-  public columns: object;
+  public columns: string;
 
   /**
    *
    * @param {Object} Board - Board
    */
-  constructor({ title, columns }) {
+  constructor({ id = uuidv4(), title, columns }: IBoard) {
     /**
      * @property {uuid()} id - id
      */
-    this.id = uuidv4();
+    this.id = id;
     /**
      * @property {string} title - title
      */

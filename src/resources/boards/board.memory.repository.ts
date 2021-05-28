@@ -1,6 +1,7 @@
 // @ts-check
 
 import { DBBoards } from 'common/InMemoryDbBoards';
+import { Board } from 'resources/boards/board.model';
 
 /**
  * A Board
@@ -21,7 +22,7 @@ const getAll = async () => DBBoards.getAllBoards();
  * @param {string} id - board id
  * @returns {Promise<Board>} - Promise with a Single Board in Repository
  */
-const get = async (id) => {
+const get = async (id: string) => {
   const board = await DBBoards.getBoard(id);
   if (!board) {
     throw new Error(`[App Error] The board with id: ${id} was not found!`);
@@ -34,7 +35,15 @@ const get = async (id) => {
  * @param {object} board - Board body
  * @returns {Promise<Board>} - Promise with Created Board in Repository
  */
-const create = (board) => DBBoards.createBoard(board);
+const create = (title: string, columns: string) => {
+  const newBoard = new Board({
+    id,
+    title,
+    columns,
+  });
+
+  DBBoards.createBoard(newBoard);
+};
 
 /**
  * ### Update Board in Repository
@@ -42,14 +51,21 @@ const create = (board) => DBBoards.createBoard(board);
  * @param {Board} newBoard - New Board
  * @returns {Promise<Board>} - Promise with Updated Board in Repository
  */
-const update = (id, newBoard) => DBBoards.updateBoard(id, newBoard);
+const update = (boardId: string, title: string, columns: string) => {
+  const newBoardData = new Board({
+    id: boardId,
+    title,
+    columns,
+  });
+  DBBoards.updateBoard(newBoardData);
+};
 
 /**
  * ### Remove Board in Repository
  * @param {string} boardId - Board Id
  * @returns {Promise<Board>} - Promise with Deleted Board in Repository
  */
-const remove = (boardId) => DBBoards.removeBoard(boardId);
+const remove = (boardId: string) => DBBoards.removeBoard(boardId);
 
 export const boardsRepo = {
   getAll,

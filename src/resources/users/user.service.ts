@@ -25,7 +25,7 @@ const getAll = async () => {
  * @param {express.Request} req
  * @returns {Promise<PublicUserData>} - Promise with User by ID in Service
  */
-const get = async (userId) => {
+const get = async (userId: string) => {
   const user = await usersRepo.get(userId);
   return User.toResponse(user);
 };
@@ -35,7 +35,7 @@ const get = async (userId) => {
  * @param {express.Request} req
  * @returns {Promise<PublicUserData | {}>} - Promise with Created User in Service
  */
-const create = async (login, password, name) => {
+const create = async (login: string, password: string, name: string) => {
   const user = new User({
     login,
     password,
@@ -51,7 +51,12 @@ const create = async (login, password, name) => {
  * @param {User} newUser - new User
  * @returns {Promise<PublicUserData>}  - Promise with Updated User in Service
  */
-const update = async (userId, login, password, name) => {
+const update = async (
+  userId: string,
+  login: string,
+  password: string,
+  name: string
+) => {
   const newUserData = new User({
     id: userId,
     login,
@@ -67,7 +72,7 @@ const update = async (userId, login, password, name) => {
  * @param {string} id - User Id
  * @returns {Promise<PublicUserData>} - Promise with Deleted User in Service
  */
-const remove = async (userId) => {
+const remove = async (userId: string) => {
   const user = await usersRepo.remove(userId);
   return User.toResponse(user);
 };

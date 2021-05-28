@@ -33,7 +33,8 @@ router.route('/').get(async (_req, res) => {
  */
 router.route('/:id').get(async (req, res) => {
   try {
-    return res.json(await boardsService.get(req));
+    const { id: boardId } = req.params;
+    return res.json(await boardsService.get(boardId));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -68,7 +69,10 @@ router.route('/').post(async (req, res) => {
  */
 router.route('/:id').put(async (req, res) => {
   try {
-    return res.json(await boardsService.update(req));
+    const { id: boardId } = req.params;
+    const { title, columns } = req.body;
+
+    return res.json(await boardsService.update(boardId, title, columns));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
