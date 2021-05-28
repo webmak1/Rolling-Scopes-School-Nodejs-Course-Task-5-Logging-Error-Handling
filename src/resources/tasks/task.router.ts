@@ -32,7 +32,8 @@ router.route('/').get(async (_req, res) => {
  */
 router.route('/:id').get(async (req, res) => {
   try {
-    return res.json(await tasksService.get(req));
+    const { boardId, id: taskId } = req.params;
+    return res.json(await tasksService.get(boardId, taskId));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -51,9 +52,6 @@ router.route('/').post(async (req, res) => {
     const { boardId } = req.params;
     const { title, order, description, userId, columnId } = req.body;
 
-    // console.log(boardId);
-    // console.log({ title, order, description, userId, columnId });
-
     return res
       .status(StatusCodes.CREATED)
       .json(
@@ -67,8 +65,6 @@ router.route('/').post(async (req, res) => {
         )
       );
   } catch (err) {
-    console.log('ERR');
-    console.log(err);
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
 });
@@ -83,7 +79,9 @@ router.route('/').post(async (req, res) => {
  */
 router.route('/:id').put(async (req, res) => {
   try {
-    return res.json(await tasksService.update(req));
+    const { body } = req;
+    const { boardId, id: taskId } = req.params;
+    return res.json(await tasksService.update(boardId, taskId, body));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -99,7 +97,8 @@ router.route('/:id').put(async (req, res) => {
  */
 router.route('/:id').delete(async (req, res) => {
   try {
-    return res.json(await tasksService.remove(req));
+    const { id: deletionId } = req.params;
+    return res.json(await tasksService.remove(deletionId));
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }

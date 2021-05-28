@@ -41,7 +41,7 @@ export class Board implements IBoard {
    * @param {Board} board - Board
    * @returns { Board} - Board
    */
-  static toResponse(board) {
+  static toResponse(board: IBoard) {
     const { id, title, columns } = board;
     return { id, title, columns };
   }

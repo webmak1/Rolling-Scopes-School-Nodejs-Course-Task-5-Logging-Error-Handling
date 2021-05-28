@@ -27,11 +27,19 @@ export class Task implements ITask {
    *
    * @param {Object} Task - Task
    */
-  constructor({ title, order, description, userId, boardId, columnId }) {
+  constructor({
+    id = uuidv4(),
+    title,
+    order,
+    description,
+    userId,
+    boardId,
+    columnId,
+  }: ITask) {
     /**
      * @property {uuid()} id - id
      */
-    this.id = uuidv4();
+    this.id = id;
     /**
      * @property {string} title - title
      */
@@ -63,7 +71,7 @@ export class Task implements ITask {
    * @param {Task} task - Task
    * @returns {Task}
    */
-  static toResponse(task) {
+  static toResponse(task: ITask) {
     return task;
   }
 }

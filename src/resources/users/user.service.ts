@@ -37,6 +37,7 @@ const get = async (userId: string) => {
  */
 const create = async (login: string, password: string, name: string) => {
   const user = new User({
+    id,
     login,
     password,
     name,

@@ -1,6 +1,7 @@
 // @ts-check
 
 import { DBTasks } from 'common/InMemoryDbTasks';
+import { ITask } from 'resources/tasks/task.model';
 
 /**
  * A Tasks
@@ -26,7 +27,7 @@ const getAll = async () => DBTasks.getAllTasks();
  * @param {string} taskId - task id
  * @returns {Promise<Task>} - Promise with a Single Task in Repository
  */
-const get = async (boardId, taskId) => {
+const get = async (boardId: string, taskId: string) => {
   const task = await DBTasks.getTask(boardId, taskId);
   if (!task) {
     throw new Error(`[App Error] The task with id: ${taskId} was not found!`);
@@ -39,7 +40,7 @@ const get = async (boardId, taskId) => {
  * @param {Task} task - Task body
  * @returns {Promise<Task>} - Promise with Created Task in Repository
  */
-const create = (task) => DBTasks.createTask(task);
+const create = (task: ITask) => DBTasks.createTask(task);
 
 /**
  * ### Update Task in Repository
@@ -48,7 +49,7 @@ const create = (task) => DBTasks.createTask(task);
  * @param {Task} newTask - new Task
  * @returns {Promise<Task>} - Promise with Updated Task in Repository
  */
-const update = (boardId, taskId, newTask) =>
+const update = (boardId: string, taskId: string, newTask: ITask) =>
   DBTasks.updateTask(boardId, taskId, newTask);
 
 /**
@@ -56,7 +57,7 @@ const update = (boardId, taskId, newTask) =>
  * @param {string} id - Task Id
  * @returns {Promise<Task>} - Promise with Deleted Task in Repository
  */
-const remove = (id) => DBTasks.removeTask(id);
+const remove = (id: string) => DBTasks.removeTask(id);
 
 export const tasksRepo = {
   getAll,

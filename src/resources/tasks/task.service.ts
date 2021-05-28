@@ -1,7 +1,7 @@
 // @ts-check
 
 import { tasksRepo } from 'resources/tasks/task.memory.repository';
-import { Task } from 'resources/tasks/task.model';
+import { ITask, Task } from 'resources/tasks/task.model';
 
 /**
  * ### Get All Tasks in Service
@@ -17,8 +17,7 @@ const getAll = async () => {
  * @param {express.Request} req
  * @returns {Promise<Task>} - Promise with a Single Task in Service
  */
-const get = async (req) => {
-  const { boardId, id: taskId } = req.params;
+const get = async (boardId: string, taskId: string) => {
   const task = await tasksRepo.get(boardId, taskId);
   return Task.toResponse(task);
 };
@@ -28,9 +27,17 @@ const get = async (req) => {
  * @param {express.Request} req
  * @returns {Promise<Task>} - Promise with Created Task in Service
  */
-const create = async (boardId, title, order, description, userId, columnId) => {
+const create = async ({
+  boardId,
+  title,
+  order,
+  description,
+  userId,
+  columnId,
+}: ITask) => {
   const task = await tasksRepo.create(
     new Task({
+      id,
       boardId,
       title,
       order,
@@ -47,10 +54,7 @@ const create = async (boardId, title, order, description, userId, columnId) => {
  * @param {express.Request} req
  * @returns {Promise<Task>} - Promise with Updated Task in Service
  */
-const update = async (req) => {
-  const { body } = req;
-  const { boardId, id: taskId } = req.params;
-
+const update = async (boardId: string, taskId: string, body: string) => {
   const updatedTask = await tasksRepo.update(boardId, taskId, body);
   return Task.toResponse(updatedTask);
 };
@@ -60,8 +64,8 @@ const update = async (req) => {
  * @param {express.Request} req
  * @returns {Promise<Task>} - Promise with Deleted Task
  */
-const remove = async (req) => {
-  const task = await tasksRepo.remove(req.params.id);
+const remove = async (deletionId: string) => {
+  const task = await tasksRepo.remove(deletionId);
   return Task.toResponse(task);
 };
 

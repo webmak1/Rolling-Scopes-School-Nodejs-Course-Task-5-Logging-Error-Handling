@@ -22,7 +22,7 @@ export class User implements IUser {
    *
    * @param {Object} User - User
    */
-  constructor({ id = uuidv4(), name, login, password }) {
+  constructor({ id = uuidv4(), name, login, password }: IUser) {
     /**
      * @property {uuid()} id - id
      */
@@ -49,7 +49,7 @@ export class User implements IUser {
    * @param {User} user - User
    * @returns { {id, name, login }} - Returns User public data
    */
-  static toResponse(user) {
+  static toResponse(user: IUser) {
     const { id, name, login } = user;
     return { id, name, login };
   }

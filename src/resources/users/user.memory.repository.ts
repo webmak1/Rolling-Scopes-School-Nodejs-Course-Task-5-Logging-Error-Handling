@@ -1,6 +1,7 @@
 // @ts-check
 
 import { DBUsers } from 'common/InMemoryDbUsers';
+import { IUser } from 'resources/users/user.model';
 
 /**
  * A User
@@ -22,7 +23,7 @@ const getAll = async () => DBUsers.getAllUsers();
  * @param {string} id - user id
  * @returns {Promise<User>} - Promise with User by Id in Repository
  */
-const get = async (userId) => {
+const get = async (userId: string) => {
   const user = await DBUsers.getUser(userId);
   if (!user) {
     throw new Error(`[App Error] The user with id: ${userId} was not found!`);
@@ -35,7 +36,7 @@ const get = async (userId) => {
  * @param {User} user - User
  * @returns {Promise<User>} - Promise with Created User in Repository
  */
-const create = (user) => DBUsers.createUser(user);
+const create = (user: IUser) => DBUsers.createUser(user);
 
 /**
  * ### Update User in Repository
@@ -43,14 +44,14 @@ const create = (user) => DBUsers.createUser(user);
  * @param {object} newUser - new User
  * @returns {Promise<User>} - Promise with Updated User in Repository
  */
-const update = (newUserData) => DBUsers.updateUser(newUserData);
+const update = (newUserData: IUser) => DBUsers.updateUser(newUserData);
 
 /**
  * ### Remove User in Repository
  * @param {string} id - User Id
  * @returns {Promise<User>} - Promise with Deleted User in Repository
  */
-const remove = (userId) => DBUsers.removeUser(userId);
+const remove = (userId: string) => DBUsers.removeUser(userId);
 
 export const usersRepo = {
   getAll,
