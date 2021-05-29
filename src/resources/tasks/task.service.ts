@@ -37,7 +37,7 @@ const create = async ({
 }: ITask) => {
   const task = await tasksRepo.create(
     new Task({
-      id,
+      id: '',
       boardId,
       title,
       order,

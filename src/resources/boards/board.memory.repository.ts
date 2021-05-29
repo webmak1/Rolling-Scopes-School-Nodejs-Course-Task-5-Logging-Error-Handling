@@ -37,7 +37,7 @@ const get = async (id: string) => {
  */
 const create = (title: string, columns: string) => {
   const newBoard = new Board({
-    id,
+    id: '',
     title,
     columns,
   });
