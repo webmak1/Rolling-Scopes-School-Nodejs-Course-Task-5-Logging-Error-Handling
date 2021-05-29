@@ -1,7 +1,7 @@
 // @ts-check
 
 import { DBTasks } from 'common/InMemoryDbTasks';
-import { ITask, Task } from 'resources/tasks/task.model';
+import { Task } from 'resources/tasks/task.model';
 
 /**
  * A Tasks
@@ -69,8 +69,28 @@ const create = (
  * @param {Task} newTask - new Task
  * @returns {Promise<Task>} - Promise with Updated Task in Repository
  */
-const update = (boardId: string, taskId: string, newTask: ITask) =>
-  DBTasks.updateTask(boardId, taskId, newTask);
+const update = (
+  boardId: string,
+  taskId: string,
+  title: string,
+  order: string,
+  description: string,
+  userId: string,
+  columnId: string
+) => {
+  const updateTask = new Task({
+    id: taskId,
+    boardId,
+    title,
+    order,
+    description,
+    userId,
+    columnId,
+  });
+
+  DBTasks.updateTask(boardId, taskId, updateTask);
+  return get(updateTask.boardId, updateTask.id);
+};
 
 /**
  * ### Remove Task in Repository

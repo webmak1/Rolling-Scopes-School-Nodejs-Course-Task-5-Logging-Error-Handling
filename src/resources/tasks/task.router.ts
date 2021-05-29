@@ -79,9 +79,19 @@ router.route('/').post(async (req, res) => {
  */
 router.route('/:id').put(async (req, res) => {
   try {
-    const { body } = req;
     const { boardId, id: taskId } = req.params;
-    return res.json(await tasksService.update(boardId, taskId, body));
+    const { title, order, description, userId, columnId } = req.body;
+    return res.json(
+      await tasksService.update(
+        boardId,
+        taskId,
+        title,
+        order,
+        description,
+        userId,
+        columnId
+      )
+    );
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }

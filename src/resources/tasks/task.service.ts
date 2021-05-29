@@ -51,8 +51,24 @@ const create = async (
  * @param {express.Request} req
  * @returns {Promise<Task>} - Promise with Updated Task in Service
  */
-const update = async (boardId: string, taskId: string, body: string) => {
-  const updatedTask = await tasksRepo.update(boardId, taskId, body);
+const update = async (
+  boardId: string,
+  taskId: string,
+  title: string,
+  order: string,
+  description: string,
+  userId: string,
+  columnId: string
+) => {
+  const updatedTask = await tasksRepo.update(
+    boardId,
+    taskId,
+    title,
+    order,
+    description,
+    userId,
+    columnId
+  );
   return Task.toResponse(updatedTask);
 };
 
