@@ -76,7 +76,7 @@ const deleteUserFromTasks = async (userId: string) => {
   await map(TasksData, async (task) => {
     if (task.userId === userId) {
       await removeTask(task.id);
-      await createTask({ ...task, userId: null });
+      await createTask({ ...task, userId: '' });
     }
   });
 };
