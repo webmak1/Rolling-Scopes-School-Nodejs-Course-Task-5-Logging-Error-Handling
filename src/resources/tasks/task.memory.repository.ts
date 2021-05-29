@@ -1,7 +1,7 @@
 // @ts-check
 
 import { DBTasks } from 'common/InMemoryDbTasks';
-import { ITask } from 'resources/tasks/task.model';
+import { ITask, Task } from 'resources/tasks/task.model';
 
 /**
  * A Tasks
@@ -40,7 +40,27 @@ const get = async (boardId: string, taskId: string) => {
  * @param {Task} task - Task body
  * @returns {Promise<Task>} - Promise with Created Task in Repository
  */
-const create = (task: ITask) => DBTasks.createTask(task);
+const create = (
+  boardId: string,
+  title: string,
+  order: string,
+  description: string,
+  userId: string,
+  columnId: string
+) => {
+  const newTask = new Task({
+    id: '',
+    boardId,
+    title,
+    order,
+    description,
+    userId,
+    columnId,
+  });
+
+  DBTasks.createTask(newTask);
+  return get(newTask.boardId, newTask.id);
+};
 
 /**
  * ### Update Task in Repository

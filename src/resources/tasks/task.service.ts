@@ -1,7 +1,7 @@
 // @ts-check
 
 import { tasksRepo } from 'resources/tasks/task.memory.repository';
-import { ITask, Task } from 'resources/tasks/task.model';
+import { Task } from 'resources/tasks/task.model';
 
 /**
  * ### Get All Tasks in Service
@@ -27,24 +27,21 @@ const get = async (boardId: string, taskId: string) => {
  * @param {express.Request} req
  * @returns {Promise<Task>} - Promise with Created Task in Service
  */
-const create = async ({
-  boardId,
-  title,
-  order,
-  description,
-  userId,
-  columnId,
-}: ITask) => {
+const create = async (
+  boardId: string,
+  title: string,
+  order: string,
+  description: string,
+  userId: string,
+  columnId: string
+) => {
   const task = await tasksRepo.create(
-    new Task({
-      id: '',
-      boardId,
-      title,
-      order,
-      description,
-      userId,
-      columnId,
-    })
+    boardId,
+    title,
+    order,
+    description,
+    userId,
+    columnId
   );
   return Task.toResponse(task);
 };
