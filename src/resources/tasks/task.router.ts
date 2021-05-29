@@ -4,6 +4,10 @@ import * as express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { tasksService } from 'resources/tasks/task.service';
 
+// interface hasBoardId extends express.Request {
+//   boardId: string;
+// }
+
 const router = express.Router({ mergeParams: true });
 
 /**
