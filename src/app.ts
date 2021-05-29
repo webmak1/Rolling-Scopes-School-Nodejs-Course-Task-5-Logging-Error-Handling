@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import * as path from 'path';
 import { router as boardRouter } from 'resources/boards/board.router';
 import { router as taskRouter } from 'resources/tasks/task.router';

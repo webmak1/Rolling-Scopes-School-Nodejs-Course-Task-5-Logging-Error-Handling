@@ -49,7 +49,10 @@ const update = async (boardId: string, title: string, columns: string) => {
  */
 const remove = async (boardId: string) => {
   const board = await boardsRepo.remove(boardId);
-  return Board.toResponse(board);
+  if (board) {
+    return Board.toResponse(board);
+  }
+  throw new Error('[App] Null Pointer Exception');
 };
 
 export const boardsService = {

@@ -3,30 +3,16 @@
 import { tasksRepo } from 'resources/tasks/task.memory.repository';
 import { Task } from 'resources/tasks/task.model';
 
-/**
- * ### Get All Tasks in Service
- * @returns {Promise<Task[]>} - Promise with All Tasks in Service
- */
 const getAll = async () => {
   const tasks = await tasksRepo.getAll();
   return tasks.map(Task.toResponse);
 };
 
-/**
- * ### Get Task by Id in Service
- * @param {express.Request} req
- * @returns {Promise<Task>} - Promise with a Single Task in Service
- */
 const get = async (boardId: string, taskId: string) => {
   const task = await tasksRepo.get(boardId, taskId);
   return Task.toResponse(task);
 };
 
-/**
- * ### Create Task in Service
- * @param {express.Request} req
- * @returns {Promise<Task>} - Promise with Created Task in Service
- */
 const create = async (
   boardId: string,
   title: string,
@@ -46,11 +32,6 @@ const create = async (
   return Task.toResponse(task);
 };
 
-/**
- * ### Update Task in Service
- * @param {express.Request} req
- * @returns {Promise<Task>} - Promise with Updated Task in Service
- */
 const update = async (
   boardId: string,
   taskId: string,
@@ -72,14 +53,12 @@ const update = async (
   return Task.toResponse(updatedTask);
 };
 
-/**
- * ### Remove Task in Service
- * @param {express.Request} req
- * @returns {Promise<Task>} - Promise with Deleted Task
- */
 const remove = async (deletionId: string) => {
   const task = await tasksRepo.remove(deletionId);
-  return Task.toResponse(task);
+  if (task) {
+    return Task.toResponse(task);
+  }
+  throw new Error('[App] Null Pointer Exception');
 };
 
 export const tasksService = {
