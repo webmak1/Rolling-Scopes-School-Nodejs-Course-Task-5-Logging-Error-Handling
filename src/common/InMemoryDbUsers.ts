@@ -32,10 +32,10 @@ const createUser = (user: IUser): IUser => {
   throw '[App] Null Pointer Exception!';
 };
 
-const removeUser = async (userId: string): Promise<IUser> => {
+const removeUser = (userId: string): IUser => {
   const deletedUser = getUser(userId);
   remove(UsersData, (user) => user.id === userId);
-  await DBTasks.deleteUserFromTasks(userId);
+  DBTasks.deleteUserFromTasks(userId);
   const res = deletedUser;
   if (res) {
     return res;
@@ -43,8 +43,8 @@ const removeUser = async (userId: string): Promise<IUser> => {
   throw '[App] Null Pointer Exception!';
 };
 
-const updateUser = async (newUserData: IUser): Promise<IUser> => {
-  await removeUser(newUserData.id);
+const updateUser = (newUserData: IUser): IUser => {
+  removeUser(newUserData.id);
   createUser(newUserData);
   const res = getUser(newUserData.id);
   if (res) {

@@ -34,19 +34,19 @@ const create = (login: string, password: string, name: string): IUser => {
 };
 
 // UPDATE USER
-const update = async (
+const update = (
   userId: string,
   login: string,
   password: string,
   name: string
-): Promise<IUser> => {
+): IUser => {
   const newUserData = new User({
     id: userId,
     login,
     password,
     name,
   });
-  await DBUsers.updateUser(newUserData);
+  DBUsers.updateUser(newUserData);
 
   const user = DBUsers.getUser(newUserData.id);
   if (!user) {

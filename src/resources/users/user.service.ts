@@ -4,8 +4,8 @@ import { usersRepo } from 'resources/users/user.memory.repository';
 import { IUser, User } from 'resources/users/user.model';
 
 // GET ALL
-const getAll = async (): Promise<IUser[]> => {
-  const users = await usersRepo.getAll();
+const getAll = (): IUser[] => {
+  const users = usersRepo.getAll();
   return users.map(User.toResponse);
 };
 
