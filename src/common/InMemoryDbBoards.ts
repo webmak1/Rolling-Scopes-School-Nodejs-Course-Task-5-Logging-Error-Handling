@@ -36,8 +36,8 @@ const createBoard = (board: IBoard): IBoard => {
 };
 
 // UPDATE BOARD
-const updateBoard = async (updateBoard: IBoard): Promise<IBoard> => {
-  await removeBoard(updateBoard.id);
+const updateBoard = (updateBoard: IBoard): IBoard => {
+  removeBoard(updateBoard.id);
   createBoard(updateBoard);
   const res = getBoard(updateBoard.id);
   if (res) {
