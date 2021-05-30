@@ -48,7 +48,7 @@ router.route('/').post((req: Request, res: Response) => {
 });
 
 // UPDATE USER
-router.route('/:id').put(async (req: Request, res: Response) => {
+router.route('/:id').put((req: Request, res: Response) => {
   try {
     const { id: userId } = req.params;
     const { login, password, name } = req.body as IUserReqBody;
