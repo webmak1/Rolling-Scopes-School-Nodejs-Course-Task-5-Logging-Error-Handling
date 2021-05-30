@@ -6,7 +6,7 @@ import { IUser } from 'resources/users/user.model';
 
 const UsersData: IUser[] = [];
 
-const getAllUsers = (): IUser[] => {
+const getAllUsers = async (): Promise<IUser[]> => {
   const res = UsersData.slice(0);
   if (res) {
     return res;
@@ -14,8 +14,8 @@ const getAllUsers = (): IUser[] => {
   throw '[App] Null Pointer Exception!';
 };
 
-const getUser = (userId: string): IUser => {
-  const allUsers = getAllUsers();
+const getUser = async (userId: string): Promise<IUser> => {
+  const allUsers = await getAllUsers();
   const res = allUsers.filter((el) => el?.id === userId)[0];
   if (res) {
     return res;
@@ -23,9 +23,9 @@ const getUser = (userId: string): IUser => {
   throw '[App] Null Pointer Exception!';
 };
 
-const createUser = (user: IUser): IUser => {
+const createUser = async (user: IUser): Promise<IUser> => {
   UsersData.push(user);
-  const res = getUser(user.id);
+  const res = await getUser(user.id);
   if (res) {
     return res;
   }
@@ -33,7 +33,7 @@ const createUser = (user: IUser): IUser => {
 };
 
 const removeUser = async (userId: string): Promise<IUser> => {
-  const deletedUser = getUser(userId);
+  const deletedUser = await getUser(userId);
   remove(UsersData, (user) => user.id === userId);
   await DBTasks.deleteUserFromTasks(userId);
   const res = deletedUser;
@@ -45,8 +45,8 @@ const removeUser = async (userId: string): Promise<IUser> => {
 
 const updateUser = async (newUserData: IUser): Promise<IUser> => {
   await removeUser(newUserData.id);
-  createUser(newUserData);
-  const res = getUser(newUserData.id);
+  await createUser(newUserData);
+  const res = await getUser(newUserData.id);
   if (res) {
     return res;
   }

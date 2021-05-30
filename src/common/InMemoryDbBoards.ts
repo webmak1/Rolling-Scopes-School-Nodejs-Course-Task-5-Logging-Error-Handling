@@ -7,7 +7,7 @@ import { IBoard } from 'resources/boards/board.model';
 const BoardsData: IBoard[] = [];
 
 // GET ALL BOARDS
-const getAllBoards = (): IBoard[] => {
+const getAllBoards = async (): Promise<IBoard[]> => {
   const res = BoardsData.slice(0);
   if (res) {
     return res;
@@ -16,8 +16,8 @@ const getAllBoards = (): IBoard[] => {
 };
 
 // GET BOARD BY ID
-const getBoard = (id: string): IBoard => {
-  const allBoards = getAllBoards();
+const getBoard = async (id: string): Promise<IBoard> => {
+  const allBoards = await getAllBoards();
   const res = allBoards.filter((el) => el?.id === id)[0];
   if (res) {
     return res;
@@ -26,7 +26,7 @@ const getBoard = (id: string): IBoard => {
 };
 
 // CREATE BOARD
-const createBoard = (board: IBoard): IBoard => {
+const createBoard = async (board: IBoard): Promise<IBoard> => {
   BoardsData.push(board);
   const res = getBoard(board.id);
   if (res) {
@@ -38,7 +38,7 @@ const createBoard = (board: IBoard): IBoard => {
 // UPDATE BOARD
 const updateBoard = async (updateBoard: IBoard): Promise<IBoard> => {
   await removeBoard(updateBoard.id);
-  createBoard(updateBoard);
+  await createBoard(updateBoard);
   const res = getBoard(updateBoard.id);
   if (res) {
     return res;
@@ -48,7 +48,7 @@ const updateBoard = async (updateBoard: IBoard): Promise<IBoard> => {
 
 // REMOVE BOARD
 const removeBoard = async (boardId: string): Promise<IBoard> => {
-  const deletedBoard = getBoard(boardId);
+  const deletedBoard = await getBoard(boardId);
   remove(BoardsData, (board) => board.id === boardId);
   await DBTasks.removeTaskByBoardId(boardId);
   const res = deletedBoard;
