@@ -4,7 +4,13 @@ import { DBUsers } from 'common/InMemoryDbUsers';
 import { IUser, User } from 'resources/users/user.model';
 
 // GET ALL USERS
-const getAll = async (): Promise<IUser[]> => DBUsers.getAllUsers();
+const getAll = (): IUser[] => {
+  const res = DBUsers.getAllUsers();
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
+};
 
 // GET USER BY ID
 const get = async (userId: string): Promise<IUser> => {

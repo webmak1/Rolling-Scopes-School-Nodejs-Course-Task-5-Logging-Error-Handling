@@ -47,10 +47,10 @@ const updateBoard = async (updateBoard: IBoard): Promise<IBoard> => {
 };
 
 // REMOVE BOARD
-const removeBoard = async (boardId: string): Promise<IBoard> => {
-  const deletedBoard = await getBoard(boardId);
+const removeBoard = (boardId: string): IBoard => {
+  const deletedBoard = getBoard(boardId);
   remove(BoardsData, (board) => board.id === boardId);
-  await DBTasks.removeTaskByBoardId(boardId);
+  DBTasks.removeTaskByBoardId(boardId);
   const res = deletedBoard;
   if (res) {
     return res;

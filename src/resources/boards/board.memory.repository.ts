@@ -4,7 +4,13 @@ import { DBBoards } from 'common/InMemoryDbBoards';
 import { Board, IBoard } from 'resources/boards/board.model';
 
 // GET ALL
-const getAll = (): IBoard[] => DBBoards.getAllBoards();
+const getAll = (): IBoard[] => {
+  const res = DBBoards.getAllBoards();
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
+};
 
 // GET BY ID
 const get = (id: string): IBoard => {
