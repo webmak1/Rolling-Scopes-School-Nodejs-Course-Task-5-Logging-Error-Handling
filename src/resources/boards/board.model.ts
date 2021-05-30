@@ -24,7 +24,7 @@ export class Board implements IBoard {
     this.columns = columns;
   }
 
-  static toResponse(board: IBoard) {
+  static toResponse(board: IBoard): IBoard {
     return board;
   }
 }

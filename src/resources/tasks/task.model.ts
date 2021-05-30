@@ -46,7 +46,7 @@ export class Task implements ITask {
     this.columnId = columnId;
   }
 
-  static toResponse(task: ITask) {
+  static toResponse(task: ITask): ITask {
     return task;
   }
 }
