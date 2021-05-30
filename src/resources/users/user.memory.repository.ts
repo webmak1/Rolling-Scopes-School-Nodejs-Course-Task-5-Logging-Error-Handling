@@ -1,13 +1,13 @@
 // @ts-check
 
 import { DBUsers } from 'common/InMemoryDbUsers';
-import { User } from 'resources/users/user.model';
+import { IUser, User } from 'resources/users/user.model';
 
 // GET ALL USERS
-const getAll = async () => DBUsers.getAllUsers();
+const getAll = async (): Promise<IUser[]> => DBUsers.getAllUsers();
 
 // GET USER BY ID
-const get = async (userId: string) => {
+const get = async (userId: string): Promise<IUser> => {
   const user = await DBUsers.getUser(userId);
   if (!user) {
     throw new Error(`[App Error] The user with id: ${userId} was not found!`);
@@ -16,7 +16,11 @@ const get = async (userId: string) => {
 };
 
 // CREATE USER
-const create = (login: string, password: string, name: string) => {
+const create = (
+  login: string,
+  password: string,
+  name: string
+): Promise<IUser> => {
   const user = new User({
     id: undefined,
     login,
@@ -33,7 +37,7 @@ const update = (
   login: string,
   password: string,
   name: string
-) => {
+): Promise<IUser> => {
   const newUserData = new User({
     id: userId,
     login,
@@ -45,7 +49,7 @@ const update = (
 };
 
 // DELETE USER
-const remove = (userId: string) => DBUsers.removeUser(userId);
+const remove = (userId: string): Promise<IUser> => DBUsers.removeUser(userId);
 
 export const usersRepo = {
   getAll,

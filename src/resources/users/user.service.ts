@@ -1,22 +1,26 @@
 // @ts-check
 
 import { usersRepo } from 'resources/users/user.memory.repository';
-import { User } from 'resources/users/user.model';
+import { IUser, User } from 'resources/users/user.model';
 
 // GET ALL
-const getAll = async () => {
+const getAll = async (): Promise<IUser[]> => {
   const users = await usersRepo.getAll();
   return users.map(User.toResponse);
 };
 
 // GET USER BY ID
-const get = async (userId: string) => {
+const get = async (userId: string): Promise<IUser> => {
   const user = await usersRepo.get(userId);
   return User.toResponse(user);
 };
 
 // CREATE USER
-const create = async (login: string, password: string, name: string) => {
+const create = async (
+  login: string,
+  password: string,
+  name: string
+): Promise<IUser> => {
   const createdUser = await usersRepo.create(login, password, name);
   if (createdUser) {
     return User.toResponse(createdUser);
@@ -30,7 +34,7 @@ const update = async (
   login: string,
   password: string,
   name: string
-) => {
+): Promise<IUser> => {
   const updatedUser = await usersRepo.update(userId, login, password, name);
   if (updatedUser) {
     return User.toResponse(updatedUser);
@@ -39,7 +43,7 @@ const update = async (
 };
 
 // DELETE USER
-const remove = async (userId: string) => {
+const remove = async (userId: string): Promise<IUser> => {
   const user = await usersRepo.remove(userId);
   if (user) {
     return User.toResponse(user);
