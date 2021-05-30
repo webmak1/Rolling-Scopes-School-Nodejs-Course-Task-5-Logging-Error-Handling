@@ -93,7 +93,7 @@ const removeTask = async (taskId: string): Promise<ITask> => {
   throw '[App] Null Pointer Exception!';
 };
 
-const deleteUserFromTasks = async (userId: string): Promise<void> => {
+const deleteUserFromTasks = (userId: string): void => {
   map(TasksData, async (task) => {
     if (task.userId === userId) {
       await removeTask(task.id);
