@@ -7,6 +7,12 @@ import express = require('express');
 
 const router: Application = express();
 
+export interface IUserReqBody {
+  login: string;
+  password: string;
+  name: string;
+}
+
 // GET ALL
 router.route('/').get(async (_req: Request, res: Response) => {
   try {
@@ -32,7 +38,7 @@ router.route('/:id').get(async (req: Request, res: Response) => {
 // CREATE USER
 router.route('/').post(async (req: Request, res: Response) => {
   try {
-    const { login, password, name } = req.body;
+    const { login, password, name } = req.body as IUserReqBody;
     return res
       .status(StatusCodes.CREATED)
       .json(await usersService.create(login, password, name));
@@ -45,7 +51,7 @@ router.route('/').post(async (req: Request, res: Response) => {
 router.route('/:id').put(async (req: Request, res: Response) => {
   try {
     const { id: userId } = req.params;
-    const { login, password, name } = req.body;
+    const { login, password, name } = req.body as IUserReqBody;
 
     if (userId) {
       return res.json(await usersService.update(userId, login, password, name));

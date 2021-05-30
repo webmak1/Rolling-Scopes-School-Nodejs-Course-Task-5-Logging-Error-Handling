@@ -7,6 +7,14 @@ import express = require('express');
 
 const router = express.Router({ mergeParams: true });
 
+export interface ITaskReqBody {
+  title: string;
+  order: string;
+  description: string;
+  userId: string;
+  columnId: string;
+}
+
 // GET ALL TASKS
 router.route('/').get(async (_req: Request, res: Response) => {
   try {
@@ -33,7 +41,13 @@ router.route('/:id').get(async (req: Request, res: Response) => {
 router.route('/').post(async (req: Request, res: Response) => {
   try {
     const { boardId } = req.params;
-    const { title, order, description, userId, columnId } = req.body;
+    const {
+      title,
+      order,
+      description,
+      userId,
+      columnId,
+    } = req.body as ITaskReqBody;
     if (boardId) {
       return res
         .status(StatusCodes.CREATED)
@@ -58,7 +72,13 @@ router.route('/').post(async (req: Request, res: Response) => {
 router.route('/:id').put(async (req: Request, res: Response) => {
   try {
     const { boardId, id: taskId } = req.params;
-    const { title, order, description, userId, columnId } = req.body;
+    const {
+      title,
+      order,
+      description,
+      userId,
+      columnId,
+    } = req.body as ITaskReqBody;
 
     if (boardId && taskId) {
       return res.json(
