@@ -4,27 +4,27 @@ import { tasksRepo } from 'resources/tasks/task.memory.repository';
 import { ITask, Task } from 'resources/tasks/task.model';
 
 // GET ALL TASKS
-const getAll = async (): Promise<ITask[]> => {
-  const tasks = await tasksRepo.getAll();
+const getAll = (): ITask[] => {
+  const tasks = tasksRepo.getAll();
   return tasks.map(Task.toResponse);
 };
 
 // GET TASK BY ID
-const get = async (boardId: string, taskId: string): Promise<ITask> => {
-  const task = await tasksRepo.get(boardId, taskId);
+const get = (boardId: string, taskId: string): ITask => {
+  const task = tasksRepo.get(boardId, taskId);
   return Task.toResponse(task);
 };
 
 // CREATE TASK
-const create = async (
+const create = (
   boardId: string,
   title: string,
   order: string,
   description: string,
   userId: string,
   columnId: string
-): Promise<ITask> => {
-  const createdTask = await tasksRepo.create(
+): ITask => {
+  const createdTask = tasksRepo.create(
     boardId,
     title,
     order,
@@ -40,7 +40,7 @@ const create = async (
 };
 
 // UPDATE TASK
-const update = async (
+const update = (
   boardId: string,
   taskId: string,
   title: string,
@@ -48,8 +48,8 @@ const update = async (
   description: string,
   userId: string,
   columnId: string
-): Promise<ITask> => {
-  const updatedTask = await tasksRepo.update(
+): ITask => {
+  const updatedTask = tasksRepo.update(
     boardId,
     taskId,
     title,
@@ -66,8 +66,8 @@ const update = async (
 };
 
 // DELETE TASK
-const remove = async (deletionId: string): Promise<ITask> => {
-  const task = await tasksRepo.remove(deletionId);
+const remove = (deletionId: string): ITask => {
+  const task = tasksRepo.remove(deletionId);
   if (task) {
     return Task.toResponse(task);
   }

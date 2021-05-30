@@ -10,18 +10,14 @@ const getAll = async (): Promise<IUser[]> => {
 };
 
 // GET USER BY ID
-const get = async (userId: string): Promise<IUser> => {
-  const user = await usersRepo.get(userId);
+const get = (userId: string): IUser => {
+  const user = usersRepo.get(userId);
   return User.toResponse(user);
 };
 
 // CREATE USER
-const create = async (
-  login: string,
-  password: string,
-  name: string
-): Promise<IUser> => {
-  const createdUser = await usersRepo.create(login, password, name);
+const create = (login: string, password: string, name: string): IUser => {
+  const createdUser = usersRepo.create(login, password, name);
   if (createdUser) {
     return User.toResponse(createdUser);
   }
@@ -43,8 +39,8 @@ const update = async (
 };
 
 // DELETE USER
-const remove = async (userId: string): Promise<IUser> => {
-  const user = await usersRepo.remove(userId);
+const remove = (userId: string): IUser => {
+  const user = usersRepo.remove(userId);
   if (user) {
     return User.toResponse(user);
   }

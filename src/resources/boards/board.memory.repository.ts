@@ -33,11 +33,7 @@ const create = (title: string, columns: string): IBoard => {
 };
 
 // UPDATE BOARD
-const update = (
-  boardId: string,
-  title: string,
-  columns: string
-): Promise<IBoard> => {
+const update = (boardId: string, title: string, columns: string): IBoard => {
   const updateBoard = new Board({
     id: boardId,
     title,
@@ -45,12 +41,15 @@ const update = (
   });
 
   const res = DBBoards.updateBoard(updateBoard);
+
+  if (!res) {
+    throw new Error(`[App Error] The board with id: ${boardId} was not found!`);
+  }
   return res;
 };
 
 // REMOVE BOARD
-const remove = (boardId: string): Promise<IBoard> =>
-  DBBoards.removeBoard(boardId);
+const remove = (boardId: string): IBoard => DBBoards.removeBoard(boardId);
 
 export const boardsRepo = {
   getAll,

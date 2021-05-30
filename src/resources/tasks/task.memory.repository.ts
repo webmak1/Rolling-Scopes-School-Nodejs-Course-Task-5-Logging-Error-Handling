@@ -13,7 +13,7 @@ const getAll = (): ITask[] => {
 };
 
 // GET TASK BY ID
-const get = async (boardId: string, taskId: string): Promise<ITask> => {
+const get = (boardId: string, taskId: string): ITask => {
   const task = DBTasks.getTask(boardId, taskId);
   if (!task) {
     throw new Error(`[App Error] The task with id: ${taskId} was not found!`);
@@ -48,7 +48,7 @@ const create = (
 };
 
 // UPDATE TASK
-const update = async (
+const update = (
   boardId: string,
   taskId: string,
   title: string,
@@ -56,7 +56,7 @@ const update = async (
   description: string,
   userId: string,
   columnId: string
-): Promise<ITask> => {
+): ITask => {
   const updateTask = new Task({
     id: taskId,
     boardId,
@@ -67,7 +67,7 @@ const update = async (
     columnId,
   });
 
-  await DBTasks.updateTask(updateTask);
+  DBTasks.updateTask(updateTask);
 
   const res = DBTasks.getTask(updateTask.boardId, updateTask.id);
   if (res) {
@@ -77,7 +77,13 @@ const update = async (
 };
 
 // REMOVE TASK
-const remove = (id: string): Promise<ITask> => DBTasks.removeTask(id);
+const remove = (id: string): ITask => {
+  const res = DBTasks.removeTask(id);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
+};
 
 export const tasksRepo = {
   getAll,

@@ -13,8 +13,8 @@ const getAll = (): IUser[] => {
 };
 
 // GET USER BY ID
-const get = async (userId: string): Promise<IUser> => {
-  const user = await DBUsers.getUser(userId);
+const get = (userId: string): IUser => {
+  const user = DBUsers.getUser(userId);
   if (!user) {
     throw new Error(`[App Error] The user with id: ${userId} was not found!`);
   }
@@ -22,11 +22,7 @@ const get = async (userId: string): Promise<IUser> => {
 };
 
 // CREATE USER
-const create = (
-  login: string,
-  password: string,
-  name: string
-): Promise<IUser> => {
+const create = (login: string, password: string, name: string): IUser => {
   const user = new User({
     id: undefined,
     login,
@@ -38,7 +34,7 @@ const create = (
 };
 
 // UPDATE USER
-const update = (
+const update = async (
   userId: string,
   login: string,
   password: string,
@@ -50,8 +46,13 @@ const update = (
     password,
     name,
   });
-  DBUsers.updateUser(newUserData);
-  return DBUsers.getUser(newUserData.id);
+  await DBUsers.updateUser(newUserData);
+
+  const user = DBUsers.getUser(newUserData.id);
+  if (!user) {
+    throw new Error(`[App Error] The user with id: ${userId} was not found!`);
+  }
+  return user;
 };
 
 // DELETE USER
