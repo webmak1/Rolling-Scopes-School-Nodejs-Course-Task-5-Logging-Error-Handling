@@ -33,7 +33,7 @@ const createUser = (user: IUser): IUser => {
 };
 
 const removeUser = async (userId: string): Promise<IUser> => {
-  const deletedUser = await getUser(userId);
+  const deletedUser = getUser(userId);
   remove(UsersData, (user) => user.id === userId);
   await DBTasks.deleteUserFromTasks(userId);
   const res = deletedUser;
