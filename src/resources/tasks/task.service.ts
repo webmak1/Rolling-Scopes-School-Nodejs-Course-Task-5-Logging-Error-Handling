@@ -75,7 +75,7 @@ const update = (
 // };
 
 // DELETE TASK
-const remove = async (deletionId: string) => {
+const remove = async (deletionId: string): Promise<ITask> => {
   const task = await tasksRepo.remove(deletionId);
   if (task) {
     return Task.toResponse(task);

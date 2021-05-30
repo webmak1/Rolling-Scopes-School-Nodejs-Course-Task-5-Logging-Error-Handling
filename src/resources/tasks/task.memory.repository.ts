@@ -86,7 +86,13 @@ const update = (
 // };
 
 // REMOVE TASK
-const remove = (id: string) => DBTasks.removeTask(id);
+const remove = async (id: string): Promise<ITask> => {
+  const res = await DBTasks.removeTask(id);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
+};
 
 export const tasksRepo = {
   getAll,

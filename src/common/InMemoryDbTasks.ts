@@ -61,6 +61,28 @@ const createTask = (task: ITask): ITask => {
 //   });
 // };
 
+// const updateTask = (updatedTask: ITask): ITask => {
+//   removeTask(updatedTask.id);
+//   createTask(updatedTask);
+//   const res = getTaskById(updatedTask.id);
+//   if (res) {
+//     return res;
+//   }
+//   throw '[App] Null Pointer Exception!';
+// };
+
+// UPDATE TASK
+const updateTask = async (updatedTask: ITask): Promise<ITask> => {
+  await removeTask(updatedTask.id);
+  createTask(updatedTask);
+  const res = getTaskById(updatedTask.id);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
+};
+
+// REMOVE TASK
 const removeTask = async (taskId: string): Promise<ITask> => {
   const deletedTask = await getTaskById(taskId);
   remove(TasksData, (task) => task.id === taskId);
@@ -78,26 +100,6 @@ const deleteUserFromTasks = async (userId: string): Promise<void> => {
       createTask({ ...task, userId: null });
     }
   });
-};
-
-// const updateTask = (updatedTask: ITask): ITask => {
-//   removeTask(updatedTask.id);
-//   createTask(updatedTask);
-//   const res = getTaskById(updatedTask.id);
-//   if (res) {
-//     return res;
-//   }
-//   throw '[App] Null Pointer Exception!';
-// };
-
-const updateTask = async (updatedTask: ITask): Promise<ITask> => {
-  await removeTask(updatedTask.id);
-  createTask(updatedTask);
-  const res = getTaskById(updatedTask.id);
-  if (res) {
-    return res;
-  }
-  throw '[App] Null Pointer Exception!';
 };
 
 const removeTaskByBoardId = (boardId: string): void => {
