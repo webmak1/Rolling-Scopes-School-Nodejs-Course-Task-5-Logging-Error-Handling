@@ -77,13 +77,16 @@ const update = (
 };
 
 // REMOVE TASK
-const remove = (id: string): ITask => {
-  const res = DBTasks.removeTask(id);
-  if (res) {
-    return res;
-  }
-  throw '[App] Null Pointer Exception!';
-};
+// const remove = (id: string): ITask => {
+//   const res = DBTasks.removeTask(id);
+//   if (res) {
+//     return res;
+//   }
+//   throw '[App] Null Pointer Exception!';
+// };
+
+// REMOVE TASK
+const remove = (id: string) => DBTasks.removeTask(id);
 
 export const tasksRepo = {
   getAll,
