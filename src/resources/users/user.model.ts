@@ -2,53 +2,32 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-export interface IUser {
-  id: string;
+interface IUserGeneral {
   name: string;
   login: string;
   password: string;
 }
+export interface IUser extends IUserGeneral {
+  id: string;
+}
 
-/**
- *  ### Class to create a User object
- */
+export interface IUserInput extends IUserGeneral {
+  id: string | undefined;
+}
+
 export class User implements IUser {
-  public id: string;
-  public name: string;
-  public login: string;
-  public password: string;
+  public id;
+  public name;
+  public login;
+  public password;
 
-  /**
-   *
-   * @param {Object} User - User
-   */
-  constructor({ id = uuidv4(), name, login, password }: IUser) {
-    /**
-     * @property {uuid()} id - id
-     */
+  constructor({ id = uuidv4(), name, login, password }: IUserInput) {
     this.id = id;
-
-    /**
-     * @property {string} name - name
-     */
     this.name = name;
-
-    /**
-     * @property {string} login - login
-     */
     this.login = login;
-
-    /**
-     * @property {string} password - password
-     */
     this.password = password;
   }
 
-  /**
-   * ### Return User public data
-   * @param {User} user - User
-   * @returns { {id, name, login }} - Returns User public data
-   */
   static toResponse(user: IUser) {
     const { id, name, login } = user;
     return { id, name, login };

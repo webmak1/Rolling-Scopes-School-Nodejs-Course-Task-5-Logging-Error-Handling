@@ -3,30 +3,10 @@
 import { DBTasks } from 'common/InMemoryDbTasks';
 import { Task } from 'resources/tasks/task.model';
 
-/**
- * A Tasks
- * @typedef {Object} Task
- * @property {string} id - Id
- * @property {string} title - Title
- * @property {string} order - Order
- * @property {string} description - Description
- * @property {string} userId - User Id
- * @property {string} boardId - Board Id
- * @property {string} columnId - Column Id
- */
-
-/**
- * ### Get All Tasks in Repository
- * @returns {Promise<Task[]>} - Promise with All Tasks in Repository
- */
+// GET ALL TASKS
 const getAll = async () => DBTasks.getAllTasks();
 
-/**
- * ### Get Task in Repository
- * @param {string} boardId - board id
- * @param {string} taskId - task id
- * @returns {Promise<Task>} - Promise with a Single Task in Repository
- */
+// GET TASK BY ID
 const get = async (boardId: string, taskId: string) => {
   const task = await DBTasks.getTask(boardId, taskId);
   if (!task) {
@@ -35,11 +15,7 @@ const get = async (boardId: string, taskId: string) => {
   return task;
 };
 
-/**
- * ### Create Task in Repository
- * @param {Task} task - Task body
- * @returns {Promise<Task>} - Promise with Created Task in Repository
- */
+// CREATE TASK
 const create = (
   boardId: string,
   title: string,
@@ -49,7 +25,7 @@ const create = (
   columnId: string
 ) => {
   const newTask = new Task({
-    id: '',
+    id: undefined,
     boardId,
     title,
     order,
@@ -58,17 +34,10 @@ const create = (
     columnId,
   });
 
-  DBTasks.createTask(newTask);
-  return get(newTask.boardId, newTask.id);
+  return DBTasks.createTask(newTask);
 };
 
-/**
- * ### Update Task in Repository
- * @param {string} boardId - Board Id
- * @param {string} taskId - Task Id
- * @param {Task} newTask - new Task
- * @returns {Promise<Task>} - Promise with Updated Task in Repository
- */
+// UPDATE TASK
 const update = (
   boardId: string,
   taskId: string,
@@ -88,15 +57,11 @@ const update = (
     columnId,
   });
 
-  DBTasks.updateTask(boardId, taskId, updateTask);
-  return get(updateTask.boardId, updateTask.id);
+  DBTasks.updateTask(updateTask);
+  return DBTasks.getTask(updateTask.boardId, updateTask.id);
 };
 
-/**
- * ### Remove Task in Repository
- * @param {string} id - Task Id
- * @returns {Promise<Task>} - Promise with Deleted Task in Repository
- */
+// REMOVE TASK
 const remove = (id: string) => DBTasks.removeTask(id);
 
 export const tasksRepo = {

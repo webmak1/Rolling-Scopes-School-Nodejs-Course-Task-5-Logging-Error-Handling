@@ -2,31 +2,32 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-export interface ITask {
-  id: string;
+interface ITaskGeneral {
   title: string;
   order: string;
   description: string;
-  userId: string;
+  userId: string | null;
   boardId: string;
   columnId: string;
 }
 
-/**
- *  ### Class to create a Task object
- */
+export interface ITask extends ITaskGeneral {
+  id: string;
+}
+
+export interface ITaskInput extends ITaskGeneral {
+  id: string | undefined;
+}
+
 export class Task implements ITask {
-  public id: string;
-  public title: string;
-  public order: string;
-  public description: string;
-  public userId: string;
-  public boardId: string;
-  public columnId: string;
-  /**
-   *
-   * @param {Object} Task - Task
-   */
+  public id;
+  public title;
+  public order;
+  public description;
+  public userId;
+  public boardId;
+  public columnId;
+
   constructor({
     id = uuidv4(),
     title,
@@ -35,42 +36,16 @@ export class Task implements ITask {
     userId,
     boardId,
     columnId,
-  }: ITask) {
-    /**
-     * @property {uuid()} id - id
-     */
+  }: ITaskInput) {
     this.id = id;
-    /**
-     * @property {string} title - title
-     */
     this.title = title;
-    /**
-     * @property {string} order - order
-     */
     this.order = order;
-    /**
-     * @property {string} description - description
-     */
     this.description = description;
-    /**
-     * @property {string} userId - userId
-     */
     this.userId = userId;
-    /**
-     * @property {string} boardId - boardId
-     */
     this.boardId = boardId;
-    /**
-     * @property {string} columnId - columnId
-     */
     this.columnId = columnId;
   }
 
-  /**
-   * ### Return Task public data
-   * @param {Task} task - Task
-   * @returns {Task}
-   */
   static toResponse(task: ITask) {
     return task;
   }

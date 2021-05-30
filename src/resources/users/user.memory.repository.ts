@@ -1,28 +1,12 @@
 // @ts-check
 
 import { DBUsers } from 'common/InMemoryDbUsers';
-import { IUser } from 'resources/users/user.model';
+import { User } from 'resources/users/user.model';
 
-/**
- * A User
- * @typedef {Object} User - User
- * @property {string} id - Id
- * @property {string} name - Name
- * @property {string} login - Login
- * @property {string} password - Password
- */
-
-/**
- * ### Get All Users in Repository
- * @returns {Promise<User[]>} - Promise with All Users in Repository
- */
+// GET ALL USERS
 const getAll = async () => DBUsers.getAllUsers();
 
-/**
- * ### Get User by Id in Repository
- * @param {string} id - user id
- * @returns {Promise<User>} - Promise with User by Id in Repository
- */
+// GET USER BY ID
 const get = async (userId: string) => {
   const user = await DBUsers.getUser(userId);
   if (!user) {
@@ -31,26 +15,36 @@ const get = async (userId: string) => {
   return user;
 };
 
-/**
- * ### Create User in Repository
- * @param {User} user - User
- * @returns {Promise<User>} - Promise with Created User in Repository
- */
-const create = (user: IUser) => DBUsers.createUser(user);
+// CREATE USER
+const create = (login: string, password: string, name: string) => {
+  const user = new User({
+    id: undefined,
+    login,
+    password,
+    name,
+  });
+  DBUsers.createUser(user);
+  return DBUsers.getUser(user.id);
+};
 
-/**
- * ### Update User in Repository
- * @param {string} id - User Id
- * @param {object} newUser - new User
- * @returns {Promise<User>} - Promise with Updated User in Repository
- */
-const update = (newUserData: IUser) => DBUsers.updateUser(newUserData);
+// UPDATE USER
+const update = (
+  userId: string,
+  login: string,
+  password: string,
+  name: string
+) => {
+  const newUserData = new User({
+    id: userId,
+    login,
+    password,
+    name,
+  });
+  DBUsers.updateUser(newUserData);
+  return DBUsers.getUser(newUserData.id);
+};
 
-/**
- * ### Remove User in Repository
- * @param {string} id - User Id
- * @returns {Promise<User>} - Promise with Deleted User in Repository
- */
+// DELETE USER
 const remove = (userId: string) => DBUsers.removeUser(userId);
 
 export const usersRepo = {

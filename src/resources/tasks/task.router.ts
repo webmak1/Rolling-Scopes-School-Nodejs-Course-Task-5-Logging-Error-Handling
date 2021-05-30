@@ -6,9 +6,8 @@ import { tasksService } from 'resources/tasks/task.service';
 import express = require('express');
 
 const router = express.Router({ mergeParams: true });
-//const router: Application = express.Router({ mergeParams: true });
-// const router = express.Router({ mergeParams: true });
 
+// GET ALL TASKS
 router.route('/').get(async (_req: Request, res: Response) => {
   try {
     return res.json(await tasksService.getAll());
@@ -17,25 +16,24 @@ router.route('/').get(async (_req: Request, res: Response) => {
   }
 });
 
+// GET TASK BY ID
 router.route('/:id').get(async (req: Request, res: Response) => {
   try {
-    console.log(req.params);
-
     const { boardId, id: taskId } = req.params;
     if (boardId && taskId) {
       return res.json(await tasksService.get(boardId, taskId));
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
 });
 
+// CREATE TASK
 router.route('/').post(async (req: Request, res: Response) => {
   try {
     const { boardId } = req.params;
     const { title, order, description, userId, columnId } = req.body;
-
     if (boardId) {
       return res
         .status(StatusCodes.CREATED)
@@ -50,16 +48,18 @@ router.route('/').post(async (req: Request, res: Response) => {
           )
         );
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
 });
 
+// UPDATE TASK
 router.route('/:id').put(async (req: Request, res: Response) => {
   try {
     const { boardId, id: taskId } = req.params;
     const { title, order, description, userId, columnId } = req.body;
+
     if (boardId && taskId) {
       return res.json(
         await tasksService.update(
@@ -73,19 +73,20 @@ router.route('/:id').put(async (req: Request, res: Response) => {
         )
       );
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
 });
 
+// DELETE TASK
 router.route('/:id').delete(async (req: Request, res: Response) => {
   try {
     const { id: deletionId } = req.params;
     if (deletionId) {
       return res.json(await tasksService.remove(deletionId));
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }

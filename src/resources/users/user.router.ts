@@ -7,7 +7,7 @@ import express = require('express');
 
 const router: Application = express();
 
-// GET ALL USERS
+// GET ALL
 router.route('/').get(async (_req: Request, res: Response) => {
   try {
     return res.json(await usersService.getAll());
@@ -20,11 +20,10 @@ router.route('/').get(async (_req: Request, res: Response) => {
 router.route('/:id').get(async (req: Request, res: Response) => {
   try {
     const { id: userId } = req.params;
-
     if (userId) {
       return res.json(await usersService.get(userId));
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -47,10 +46,11 @@ router.route('/:id').put(async (req: Request, res: Response) => {
   try {
     const { id: userId } = req.params;
     const { login, password, name } = req.body;
+
     if (userId) {
       return res.json(await usersService.update(userId, login, password, name));
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -58,16 +58,12 @@ router.route('/:id').put(async (req: Request, res: Response) => {
 
 // DELETE USER
 router.route('/:id').delete(async (req: Request, res: Response) => {
-  console.log('DELETE');
-  console.log(req.params);
-
   try {
     const { id: userId } = req.params;
-
     if (userId) {
       return res.json(await usersService.remove(userId));
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }

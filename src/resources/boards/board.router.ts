@@ -3,10 +3,10 @@
 import { Application, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { boardsService } from 'resources/boards/board.service';
+
 import express = require('express');
 
 const router: Application = express();
-// const router = express.Router();
 
 // GET ALL BOARDS
 router.route('/').get(async (_req: Request, res: Response) => {
@@ -21,7 +21,6 @@ router.route('/').get(async (_req: Request, res: Response) => {
 router.route('/:id').get(async (req: Request, res: Response) => {
   try {
     const { id: boardId } = req.params;
-
     if (boardId) {
       return res.json(await boardsService.get(boardId));
     }
@@ -32,7 +31,7 @@ router.route('/:id').get(async (req: Request, res: Response) => {
   }
 });
 
-// GREATE BOARD
+// CREATE BOARD
 router.route('/').post(async (req: Request, res: Response) => {
   try {
     const { title, columns } = req.body;
@@ -49,10 +48,11 @@ router.route('/:id').put(async (req: Request, res: Response) => {
   try {
     const { id: boardId } = req.params;
     const { title, columns } = req.body;
+
     if (boardId) {
       return res.json(await boardsService.update(boardId, title, columns));
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
@@ -65,10 +65,8 @@ router.route('/:id').delete(async (req: Request, res: Response) => {
     if (boardId) {
       return res.json(await boardsService.remove(boardId));
     }
-    return res.status(StatusCodes.BAD_REQUEST).send('[App] wrong req params');
+    return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
-    console.log('DELETE BOARD');
-    console.log(err);
     return res.status(StatusCodes.NOT_FOUND).send(err.message);
   }
 });

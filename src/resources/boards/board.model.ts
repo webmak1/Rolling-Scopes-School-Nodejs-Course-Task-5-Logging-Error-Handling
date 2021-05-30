@@ -1,48 +1,30 @@
 // @ts-check
 
 import { v4 as uuidv4 } from 'uuid';
-
-export interface IBoard {
-  id: string;
+interface IBoardGeneral {
   title: string;
   columns: string;
 }
+export interface IBoard extends IBoardGeneral {
+  id: string;
+}
 
-/**
- *  ### Class to create a Board object
- */
+export interface IBoardInput extends IBoardGeneral {
+  id: string | undefined;
+}
+
 export class Board implements IBoard {
-  public id: string;
-  public title: string;
-  public columns: string;
+  public id;
+  public title;
+  public columns;
 
-  /**
-   *
-   * @param {Object} Board - Board
-   */
-  constructor({ id = uuidv4(), title, columns }: IBoard) {
-    /**
-     * @property {uuid()} id - id
-     */
+  constructor({ id = uuidv4(), title, columns }: IBoardInput) {
     this.id = id;
-    /**
-     * @property {string} title - title
-     */
     this.title = title;
-    /**
-     * @property {string} columns - columns
-     */
     this.columns = columns;
   }
 
-  /**
-   * ### Return Board public data
-   * @property {Function} toResponse - Returns Board public data
-   * @param {Board} board - Board
-   * @returns { Board} - Board
-   */
   static toResponse(board: IBoard) {
-    const { id, title, columns } = board;
-    return { id, title, columns };
+    return board;
   }
 }

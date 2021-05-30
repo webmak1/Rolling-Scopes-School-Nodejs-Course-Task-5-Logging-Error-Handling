@@ -3,16 +3,19 @@
 import { tasksRepo } from 'resources/tasks/task.memory.repository';
 import { Task } from 'resources/tasks/task.model';
 
+// GET ALL TASKS
 const getAll = async () => {
   const tasks = await tasksRepo.getAll();
   return tasks.map(Task.toResponse);
 };
 
+// GET TASK BY ID
 const get = async (boardId: string, taskId: string) => {
   const task = await tasksRepo.get(boardId, taskId);
   return Task.toResponse(task);
 };
 
+// CREATE TASK
 const create = async (
   boardId: string,
   title: string,
@@ -21,7 +24,7 @@ const create = async (
   userId: string,
   columnId: string
 ) => {
-  const task = await tasksRepo.create(
+  const createdTask = await tasksRepo.create(
     boardId,
     title,
     order,
@@ -29,9 +32,14 @@ const create = async (
     userId,
     columnId
   );
-  return Task.toResponse(task);
+
+  if (createdTask) {
+    return Task.toResponse(createdTask);
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
+// UPDATE TASK
 const update = async (
   boardId: string,
   taskId: string,
@@ -50,15 +58,20 @@ const update = async (
     userId,
     columnId
   );
-  return Task.toResponse(updatedTask);
+
+  if (updatedTask) {
+    return Task.toResponse(updatedTask);
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
+// DELETE TASK
 const remove = async (deletionId: string) => {
   const task = await tasksRepo.remove(deletionId);
   if (task) {
     return Task.toResponse(task);
   }
-  throw new Error('[App] Null Pointer Exception');
+  throw '[App] Null Pointer Exception!';
 };
 
 export const tasksService = {

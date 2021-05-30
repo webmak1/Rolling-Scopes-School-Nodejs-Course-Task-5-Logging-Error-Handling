@@ -3,56 +3,43 @@
 import { boardsRepo } from 'resources/boards/board.memory.repository';
 import { Board } from 'resources/boards/board.model';
 
-/**
- * ### Get All Boards in Service
- * @returns {Promise<Board[]>} - Promise with All Boards in Service
- */
+// GET ALL BOARDS
 const getAll = async () => {
   const boards = await boardsRepo.getAll();
   return boards.map(Board.toResponse);
 };
 
-/**
- * ### Get Board By Id in Service
- * @param {express.Request} req
- * @returns {Promise<Board>} - Promise with a Single Board in Service
- */
+// GET BOARD
 const get = async (boardId: string) => {
   const board = await boardsRepo.get(boardId);
   return Board.toResponse(board);
 };
 
-/**
- * ### Create Board in Service
- * @param {express.Request} req
- * @returns {Promise<Board>} - Promise with Created Board in Service
- */
+// CREATE BOARD
 const create = async (title: string, columns: string) => {
   const board = await boardsRepo.create(title, columns);
-  return Board.toResponse(board);
+  if (board) {
+    return Board.toResponse(board);
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
-/**
- * ### Update Board in Service
- * @param {express.Request} req
- * @returns {Promise<Board>} - Promise with Updated Board in Service
- */
+// UPDATE BOARD
 const update = async (boardId: string, title: string, columns: string) => {
   const board = await boardsRepo.update(boardId, title, columns);
-  return Board.toResponse(board);
+  if (board) {
+    return Board.toResponse(board);
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
-/**
- * ### Remove Board in Service
- * @param {express.Request} req
- * @returns {Promise<Board>} - Promise with Deleted Board in Service
- */
+// DELETE BOARD
 const remove = async (boardId: string) => {
   const board = await boardsRepo.remove(boardId);
   if (board) {
     return Board.toResponse(board);
   }
-  throw new Error('[App] Null Pointer Exception');
+  throw '[App] Null Pointer Exception!';
 };
 
 export const boardsService = {
