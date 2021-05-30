@@ -14,9 +14,9 @@ export interface IUserReqBody {
 }
 
 // GET ALL
-router.route('/').get(async (_req: Request, res: Response) => {
+router.route('/').get((_req: Request, res: Response) => {
   try {
-    return res.json(await usersService.getAll());
+    return res.json(usersService.getAll());
   } catch (err) {
     return res.status(StatusCodes.NOT_FOUND).send('Something bad happened!');
   }
@@ -54,7 +54,7 @@ router.route('/:id').put(async (req: Request, res: Response) => {
     const { login, password, name } = req.body as IUserReqBody;
 
     if (userId) {
-      return res.json(await usersService.update(userId, login, password, name));
+      return res.json(usersService.update(userId, login, password, name));
     }
     return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
