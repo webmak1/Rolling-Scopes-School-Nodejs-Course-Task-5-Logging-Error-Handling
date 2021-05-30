@@ -7,33 +7,55 @@ import { IBoard } from 'resources/boards/board.model';
 const BoardsData: IBoard[] = [];
 
 // GET ALL BOARDS
-const getAllBoards = async () => BoardsData.slice(0);
+const getAllBoards = async (): Promise<IBoard[]> => {
+  const res = BoardsData.slice(0);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
+};
 
 // GET BOARD BY ID
-const getBoard = async (id: string) => {
+const getBoard = async (id: string): Promise<IBoard> => {
   const allBoards = await getAllBoards();
-  return allBoards.filter((el) => el?.id === id)[0];
+  const res = allBoards.filter((el) => el?.id === id)[0];
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
 // CREATE BOARD
-const createBoard = async (board: IBoard) => {
+const createBoard = async (board: IBoard): Promise<IBoard> => {
   BoardsData.push(board);
-  return getBoard(board.id);
+  const res = getBoard(board.id);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
 // UPDATE BOARD
-const updateBoard = async (updateBoard: IBoard) => {
+const updateBoard = async (updateBoard: IBoard): Promise<IBoard> => {
   await removeBoard(updateBoard.id);
   await createBoard(updateBoard);
-  return getBoard(updateBoard.id);
+  const res = getBoard(updateBoard.id);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
 // REMOVE BOARD
-const removeBoard = async (boardId: string) => {
+const removeBoard = async (boardId: string): Promise<IBoard> => {
   const deletedBoard = await getBoard(boardId);
-  await remove(BoardsData, (board) => board.id === boardId);
+  remove(BoardsData, (board) => board.id === boardId);
   await DBTasks.removeTaskByBoardId(boardId);
-  return deletedBoard;
+  const res = deletedBoard;
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
 export const DBBoards = {

@@ -6,29 +6,51 @@ import { IUser } from 'resources/users/user.model';
 
 const UsersData: IUser[] = [];
 
-const getAllUsers = async () => UsersData.slice(0);
+const getAllUsers = async (): Promise<IUser[]> => {
+  const res = UsersData.slice(0);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
+};
 
-const getUser = async (userId: string) => {
+const getUser = async (userId: string): Promise<IUser> => {
   const allUsers = await getAllUsers();
-  return allUsers.filter((el) => el?.id === userId)[0];
+  const res = allUsers.filter((el) => el?.id === userId)[0];
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
-const createUser = async (user: IUser) => {
+const createUser = async (user: IUser): Promise<IUser> => {
   UsersData.push(user);
-  return getUser(user.id);
+  const res = await getUser(user.id);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
-const removeUser = async (userId: string) => {
+const removeUser = async (userId: string): Promise<IUser> => {
   const deletedUser = await getUser(userId);
-  await remove(UsersData, (user) => user.id === userId);
+  remove(UsersData, (user) => user.id === userId);
   await DBTasks.deleteUserFromTasks(userId);
-  return deletedUser;
+  const res = deletedUser;
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
-const updateUser = async (newUserData: IUser) => {
+const updateUser = async (newUserData: IUser): Promise<IUser> => {
   await removeUser(newUserData.id);
   await createUser(newUserData);
-  return getUser(newUserData.id);
+  const res = await getUser(newUserData.id);
+  if (res) {
+    return res;
+  }
+  throw '[App] Null Pointer Exception!';
 };
 
 export const DBUsers = {
