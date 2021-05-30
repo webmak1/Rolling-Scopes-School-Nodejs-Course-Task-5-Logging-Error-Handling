@@ -2,7 +2,7 @@
 
 Привет!
 
-Разрабатывается и тестируется в последней ubuntu lts.
+Разрабатывается и тестируется в последней Ubuntu LTS.
 
 Если вы работаете windows и есть gmail аккаунт, работу можно протестировать в бесплатных облаках google.
 https://shell.cloud.google.com/
@@ -11,7 +11,9 @@ https://shell.cloud.google.com/
 
 ## Часть 1
 
-Генерится doc в калалог "jsdocs".
+Генерится doc в калалог "jsdocs"
+
+Можно взять код маркированный тегом "jsdoc", можно использовать специально созданный бранч jsdoc.
 
 <br/>
 
@@ -32,3 +34,14 @@ https://shell.cloud.google.com/
 <br/>
 
 ![Application](/img/pic-02.png?raw=true)
+
+<br/>
+
+В **.eslintrc.json** прописано
+
+```
+"@typscript-eslint/no-unused-vars": "off",
+"@typscript-eslint/no-unused-params": "off",
+```
+
+т.к. данные правила проверяются комилятором tsc и нет необходимости делать проверку еще и linter.
