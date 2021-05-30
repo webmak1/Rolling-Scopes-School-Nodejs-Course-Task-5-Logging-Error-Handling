@@ -25,13 +25,13 @@ const create = (login: string, password: string, name: string): IUserOutput => {
 };
 
 // UPDATE USER
-const update = async (
+const update = (
   userId: string,
   login: string,
   password: string,
   name: string
-): Promise<IUserOutput> => {
-  const updatedUser = await usersRepo.update(userId, login, password, name);
+): IUserOutput => {
+  const updatedUser = usersRepo.update(userId, login, password, name);
   if (updatedUser) {
     return User.toResponse(updatedUser);
   }
@@ -39,8 +39,8 @@ const update = async (
 };
 
 // DELETE USER
-const remove = async (userId: string): Promise<IUserOutput> => {
-  const user = await usersRepo.remove(userId);
+const remove = (userId: string): IUserOutput => {
+  const user = usersRepo.remove(userId);
   if (user) {
     return User.toResponse(user);
   }
