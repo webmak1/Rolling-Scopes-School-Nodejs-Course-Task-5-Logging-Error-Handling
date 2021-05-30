@@ -16,7 +16,10 @@
   "rules": {
     "prefer-const": "error",
     "@typscript-eslint/no-unused-vars": "off",
-    "@typscript-eslint/no-unused-params": "off"
+    "@typscript-eslint/no-unused-params": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off"
   },
   "overrides": [
     {
