@@ -56,7 +56,7 @@ const update = (
 };
 
 // DELETE USER
-const remove = (userId: string): Promise<IUser> => DBUsers.removeUser(userId);
+const remove = (userId: string): IUser => DBUsers.removeUser(userId);
 
 export const usersRepo = {
   getAll,

@@ -2,7 +2,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-interface IUserOutput {
+export interface IUserOutput {
   id: string;
   name: string;
   login: string;
@@ -36,6 +36,11 @@ export class User implements IUser {
 
   static toResponse(user: IUser): IUserOutput {
     const { id, name, login } = user;
-    return { id, name, login };
+    const output: IUserOutput = {
+      id,
+      name,
+      login,
+    };
+    return output;
   }
 }
