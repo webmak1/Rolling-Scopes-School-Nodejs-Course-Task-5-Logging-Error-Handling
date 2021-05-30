@@ -6,7 +6,7 @@ import { IUser } from 'resources/users/user.model';
 
 const UsersData: IUser[] = [];
 
-const getAllUsers = async (): Promise<IUser[]> => {
+const getAllUsers = (): IUser[] => {
   const res = UsersData.slice(0);
   if (res) {
     return res;
@@ -14,8 +14,8 @@ const getAllUsers = async (): Promise<IUser[]> => {
   throw '[App] Null Pointer Exception!';
 };
 
-const getUser = async (userId: string): Promise<IUser> => {
-  const allUsers = await getAllUsers();
+const getUser = (userId: string): IUser => {
+  const allUsers = getAllUsers();
   const res = allUsers.filter((el) => el?.id === userId)[0];
   if (res) {
     return res;
@@ -23,9 +23,9 @@ const getUser = async (userId: string): Promise<IUser> => {
   throw '[App] Null Pointer Exception!';
 };
 
-const createUser = async (user: IUser): Promise<IUser> => {
+const createUser = (user: IUser): IUser => {
   UsersData.push(user);
-  const res = await getUser(user.id);
+  const res = getUser(user.id);
   if (res) {
     return res;
   }
@@ -45,8 +45,8 @@ const removeUser = async (userId: string): Promise<IUser> => {
 
 const updateUser = async (newUserData: IUser): Promise<IUser> => {
   await removeUser(newUserData.id);
-  await createUser(newUserData);
-  const res = await getUser(newUserData.id);
+  createUser(newUserData);
+  const res = getUser(newUserData.id);
   if (res) {
     return res;
   }

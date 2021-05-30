@@ -1,14 +1,14 @@
 // @ts-check
 
 import { DBBoards } from 'common/InMemoryDbBoards';
-import { Board } from 'resources/boards/board.model';
+import { Board, IBoard } from 'resources/boards/board.model';
 
 // GET ALL
-const getAll = async () => DBBoards.getAllBoards();
+const getAll = (): IBoard[] => DBBoards.getAllBoards();
 
 // GET BY ID
-const get = async (id: string) => {
-  const board = await DBBoards.getBoard(id);
+const get = (id: string): IBoard => {
+  const board = DBBoards.getBoard(id);
   if (!board) {
     throw new Error(`[App Error] The board with id: ${id} was not found!`);
   }
@@ -16,7 +16,7 @@ const get = async (id: string) => {
 };
 
 // CREATE BOARD
-const create = (title: string, columns: string) => {
+const create = (title: string, columns: string): IBoard => {
   const newBoard = new Board({
     id: undefined,
     title,
@@ -27,7 +27,11 @@ const create = (title: string, columns: string) => {
 };
 
 // UPDATE BOARD
-const update = (boardId: string, title: string, columns: string) => {
+const update = (
+  boardId: string,
+  title: string,
+  columns: string
+): Promise<IBoard> => {
   const updateBoard = new Board({
     id: boardId,
     title,
@@ -39,7 +43,8 @@ const update = (boardId: string, title: string, columns: string) => {
 };
 
 // REMOVE BOARD
-const remove = (boardId: string) => DBBoards.removeBoard(boardId);
+const remove = (boardId: string): Promise<IBoard> =>
+  DBBoards.removeBoard(boardId);
 
 export const boardsRepo = {
   getAll,

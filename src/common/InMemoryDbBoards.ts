@@ -7,7 +7,7 @@ import { IBoard } from 'resources/boards/board.model';
 const BoardsData: IBoard[] = [];
 
 // GET ALL BOARDS
-const getAllBoards = async (): Promise<IBoard[]> => {
+const getAllBoards = (): IBoard[] => {
   const res = BoardsData.slice(0);
   if (res) {
     return res;
@@ -16,8 +16,8 @@ const getAllBoards = async (): Promise<IBoard[]> => {
 };
 
 // GET BOARD BY ID
-const getBoard = async (id: string): Promise<IBoard> => {
-  const allBoards = await getAllBoards();
+const getBoard = (id: string): IBoard => {
+  const allBoards = getAllBoards();
   const res = allBoards.filter((el) => el?.id === id)[0];
   if (res) {
     return res;
@@ -26,7 +26,7 @@ const getBoard = async (id: string): Promise<IBoard> => {
 };
 
 // CREATE BOARD
-const createBoard = async (board: IBoard): Promise<IBoard> => {
+const createBoard = (board: IBoard): IBoard => {
   BoardsData.push(board);
   const res = getBoard(board.id);
   if (res) {
@@ -38,7 +38,7 @@ const createBoard = async (board: IBoard): Promise<IBoard> => {
 // UPDATE BOARD
 const updateBoard = async (updateBoard: IBoard): Promise<IBoard> => {
   await removeBoard(updateBoard.id);
-  await createBoard(updateBoard);
+  createBoard(updateBoard);
   const res = getBoard(updateBoard.id);
   if (res) {
     return res;

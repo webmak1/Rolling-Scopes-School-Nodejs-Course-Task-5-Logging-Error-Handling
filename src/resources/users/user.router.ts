@@ -12,7 +12,7 @@ router.route('/').get(async (_req: Request, res: Response) => {
   try {
     return res.json(await usersService.getAll());
   } catch (err) {
-    return res.status(StatusCodes.NOT_FOUND).send(err.message);
+    return res.status(StatusCodes.NOT_FOUND).send('Something bad happened!');
   }
 });
 
@@ -25,7 +25,7 @@ router.route('/:id').get(async (req: Request, res: Response) => {
     }
     return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
-    return res.status(StatusCodes.NOT_FOUND).send(err.message);
+    return res.status(StatusCodes.NOT_FOUND).send('Something bad happened!');
   }
 });
 
@@ -37,7 +37,7 @@ router.route('/').post(async (req: Request, res: Response) => {
       .status(StatusCodes.CREATED)
       .json(await usersService.create(login, password, name));
   } catch (err) {
-    return res.status(StatusCodes.NOT_FOUND).send(err.message);
+    return res.status(StatusCodes.NOT_FOUND).send('Something bad happened!');
   }
 });
 
@@ -52,7 +52,7 @@ router.route('/:id').put(async (req: Request, res: Response) => {
     }
     return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
-    return res.status(StatusCodes.NOT_FOUND).send(err.message);
+    return res.status(StatusCodes.NOT_FOUND).send('Something bad happened!');
   }
 });
 
@@ -65,7 +65,7 @@ router.route('/:id').delete(async (req: Request, res: Response) => {
     }
     return res.status(StatusCodes.BAD_REQUEST).send('[App] invalid req params');
   } catch (err) {
-    return res.status(StatusCodes.NOT_FOUND).send(err.message);
+    return res.status(StatusCodes.NOT_FOUND).send('Something bad happened!');
   }
 });
 
